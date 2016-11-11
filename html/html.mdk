@@ -15,4 +15,20 @@ with a focus on simplicity and plain text readability.
 
 Enjoy!
 
+For emphasis, use the `<strong>` tag in HTML.
+We can use back-quotes by using multiple ``back`quotes``. 
+
+H~2~O or E=MC^2^
+
+"double quoted"  
+'single quoted'  
+<<guillemot quoted>>  
+<http://www.google.com>
+
+A level one heading
+===================
+
+A level two heading
+-------------------
+
 [reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
