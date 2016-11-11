@@ -1,0 +1,16 @@
+Title         : Classic Shell Scripting Notes
+Author        : Lu, Phil
+Logo          : True
+
+[TITLE]
+
+# 背景知识
+
+- POSIX
+> POSIX，Portable Operating System Interface。  
+是UNIX系统的一个设计标准，很多类UNIX系统也在支持兼容这个标准，如Linux。  
+遵循这个标准的好处是软件可以跨平台。所以windows也支持就很容易理解了，那么多优秀的开源软件，支持了这个这些软件就可能有windows版本，就可以完善丰富windows下的软件。
+
+# 入门
+
+[reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
