@@ -12,5 +12,13 @@ Logo          : True
 遵循这个标准的好处是软件可以跨平台。所以windows也支持就很容易理解了，那么多优秀的开源软件，支持了这个这些软件就可能有windows版本，就可以完善丰富windows下的软件。
 
 # 入门
+- 
+``` 
+  cat > nursers
+  #! /bin/bash -
+  
+  who | wc -l
+```
+之后每条命令都会用bash运行
 
-[reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
+- 
