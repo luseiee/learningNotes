@@ -3,14 +3,15 @@ Author        : Lu, Phil
 Logo          : True
 
 [TITLE]
+# StubHub
 
-# System 
+## System 
 
 * POD1, POD2: 两个几乎一样的server组
 * Role: 一个POD下有许多不同的Role，每个Role负责网站的不同的功能，每个role下都有若干个server。通常为偶数个，比如说16个。
 * PoolA, PoolB: 每个Role下的服务器被分为两个Pool，PoolA是单数号服务器，PoolB是偶数号服务器
 
-# Deploy Process
+## Deploy Process
 
 1. Deploy PoolA: 此时PoolB在工作
 2. Enable PoolA: 此时测试组测试PoolA性能
@@ -19,7 +20,7 @@ Logo          : True
 4. Deploy PoolB: 此时所有服务器都在工作
 5. Enable PoolB: 这步在command line完成，首先check server里的code都match，随后用命令enable
 
-# Cluster
+## Cluster
 
 有些role是cluster的，cluster的特点是服务器之间互相通信而且有一个server takes the lead，当有一半的server挂掉的时候整个cluster才会挂掉。  
 ebay的Role中只有部分有关big data的Role才会使用cluster，运维成本大一些。
