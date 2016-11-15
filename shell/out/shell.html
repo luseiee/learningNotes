@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Madoko, version 1.0.3" />
+  <meta name="viewport" content="initial-scale=1.0" />
+  <meta name="author" content="Lu, Phil" />
+  <title>Classic Shell Scripting Notes</title>
+  <style type="text/css"  class="link">
+  /*# sourceURL=madoko.css */
+  
+  .madoko .toc>.tocblock .tocblock .tocblock {
+    margin-left: 2.25em;
+  }
+  .madoko .toc>.tocblock .tocblock {
+    margin-left: 1.5em;
+  }
+  .madoko .toc-contents>.tocblock>.tocitem {
+    font-weight: bold;
+  }
+  .madoko .toc {
+    margin-top: 1em;
+  }
+  .madoko p.para-continue {
+    margin-bottom: 0pt;
+  }
+  .madoko .para-block+p {
+    margin-top: 0pt;
+  }
+  .madoko ul.para-block, .madoko ol.para-block {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+  }
+  .madoko ul.para-end, .madoko ol.para-end {
+    margin-bottom: 1em;
+  }
+  .madoko dl {
+    margin-left: 0em;
+  }
+  .madoko blockquote {
+    font-style: italic;
+  }
+  .madoko a.localref {
+    text-decoration: none;
+  }
+  .madoko a.localref:hover {
+    text-decoration: underline;
+  }
+  .madoko .footnotes {
+    font-size: smaller;
+    margin-top: 2em;
+  }
+  .madoko .footnotes hr {
+    width: 50%;
+    text-align: left;
+  }
+  .madoko .footnote { 
+    margin-left: 1em;
+  }
+  .madoko .footnote-before {
+    margin-left: -1em;
+    width: 1em;
+    display: inline-block;
+  }
+  .madoko .align-center, .madoko .align-center>p {
+    text-align: center !important;
+  }
+  .madoko .align-center pre {
+    text-align: left;
+  }
+  .madoko .align-center>* {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-left, .madoko .align-left>p {
+    text-align: left !important;
+  }
+  .madoko .align-left>* {
+    margin-left: 0pt !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-right, .madoko .align-right>p {
+    text-align: right !important;
+  }
+  .madoko .align-right>* {
+    margin-left: auto !important;
+    margin-right: 0pt !important;
+  }
+  .madoko .align-center>table,
+  .madoko .align-left>table,
+  .madoko .align-right>table {
+    text-align: left !important;
+  }
+  .madoko .equation-before {
+    float: right;
+  }
+  .madoko .bibitem {
+    font-size: smaller;
+  }
+  .madoko .bibsearch {
+    font-size: x-small;
+    text-decoration:none;
+    color: black;
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  .madoko .block, .madoko .figure, .madoko .bibitem, .madoko .equation, .madoko div.math {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .figure {
+    padding: 0.5em;
+    margin-left: 0pt;
+    margin-right: 0pt;
+  }
+  .madoko .hidden {
+    display: none;
+  }
+  .madoko .invisible {
+    visibility: hidden;
+  }
+  .madoko.preview .invisible {
+    visibility: visible;
+    opacity: 0.5;
+  }
+  .madoko code.code, .madoko span.code {
+    white-space: pre-wrap;
+  }
+  .madoko hr, hr.madoko {
+    border: none;
+    border-bottom: black solid 1px;
+    margin-bottom: 0.5ex;
+  }
+  .madoko .framed>*:first-child {
+    margin-top: 0pt;
+  }
+  .madoko .framed>*:last-child {
+    margin-bottom: 0pt;
+  }
+  .madoko ul.list-style-type-dash {
+      list-style-type: none !important;
+  }
+  .madoko ul.list-style-type-dash > li:before {
+      content: "\2013"; 
+      position: absolute;
+      margin-left: -1em; 
+  }
+  .madoko table.madoko {
+    border-collapse: collapse;
+  }
+  .madoko td, .madoko th {
+    padding: 0ex 0.5ex;
+    margin: 0pt;
+    vertical-align: top;
+  }
+  .madoko .cell-border-left {
+    border-left: 1px solid black;
+  }
+  .madoko .cell-border-right {
+    border-right: 1px solid black;
+  }
+  .madoko thead>tr:first-child>.cell-line,
+  .madoko tbody:first-child>tr:first-child>.cell-line {
+    border-top: 1px solid black;
+    border-bottom: none;
+  }
+  .madoko .cell-line, .madoko .cell-double-line {
+    border-bottom: 1px solid black;
+    border-top: none;
+  }
+  .madoko .cell-double-line {
+    border-top: 1px solid black;
+    padding-top: 1.5px !important;
+  }
+  .madoko .input-mathpre .MathJax_Display {
+    text-align: left !important;
+  }
+  .madoko div.input-mathpre {
+    text-align: left;
+    margin-top: 1.5ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .math-rendering {
+    color: gray;
+  }
+  .madoko .mathdisplay {
+    text-align: center;
+  }
+  .madoko .pretty table {
+    border-collapse: collapse;
+  }
+  .madoko .pretty td {
+    padding: 0em;
+  }
+  .madoko .pretty td.empty {
+    min-width: 1.5ex;
+  }
+  .madoko .pretty td.expander {
+    width: 100em;
+  }
+  body.madoko, .madoko .serif {
+    font-family: Cambria,"Times New Roman","Liberation Serif","Times",serif;
+  }
+  .madoko .sans-serif {
+    font-family: "Calibri", "Optima", sans-serif;
+  }
+  .madoko .symbol {
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  body.madoko {  
+    -webkit-text-size-adjust: 100%;       
+    text-rendering: optimizeLegibility;
+  }
+  body.madoko {
+    max-width: 88ex; 
+    margin: 1em auto;
+    padding: 0em 2em;  
+  }
+  body.preview.madoko {
+    padding: 0em 1em;
+  }
+  .madoko p {
+    text-align: justify;
+  }
+  .madoko h1, .madoko h2, .madoko h3, .madoko h4 { 
+    margin-top: 1.22em; 
+    margin-bottom: 1ex;
+  }
+  .madoko h1+p, .madoko h2+p, .madoko h3+p, .madoko h4+p, .madoko h5+p  { 
+    margin-top: 1ex;    
+  }
+  .madoko h5, .madoko h6 { 
+    margin-top: 1ex;
+    font-size: 1em;
+  }
+  .madoko h5 { 
+    margin-bottom: 0.5ex;
+  }
+  .madoko h5 + p {
+    margin-top: 0.5ex;
+  }
+  .madoko h6 { 
+    margin-bottom: 0pt;
+  }
+  .madoko h6 + p {
+    margin-top: 0pt;
+  }
+  .madoko pre, .madoko code, .madoko kbd, .madoko samp, .madoko tt, 
+  .madoko .monospace, .madoko .token-indent, .madoko .reveal pre, .madoko .reveal code, .madoko .email {
+    font-family: Consolas,"Andale Mono WT","Andale Mono",Lucida Console,Monaco,monospace,monospace;
+    font-size: 0.85em;
+  }
+  .madoko pre code, .madoko .token-indent {
+    font-size: 0.95em;
+  }
+  .madoko pre code {
+    font-family: inherit !important;
+  }
+  .madoko ol.linenums li {
+    background-color: white;
+    list-style-type: decimal;
+  }
+  .madoko .remote {
+    background-color: #F0FFF0;
+  }
+  .madoko .remote + * {
+    margin-top: 0pt;
+  }
+  @media print {
+    body.madoko {
+      font-size: 10pt;
+    }
+    @page {
+      margin: 1in 1.5in;
+    }
+  }
+  @media only screen and (max-device-width:1024px) {
+    body.madoko {
+      padding: 0em 0.5em;    
+    }
+    .madoko li {
+      text-align: left;
+    }
+  }
+  
+    </style>
+  
+  </head>
+<body class="madoko">
+
+<div class="body madoko" style="line-adjust:0">
+
+<div class="titleblock align-center para-block" style="text-align:center;line-adjust:0">
+<div class="titleheader align-center" style="text-align:center;line-adjust:0">
+<div class="title para-block" style="font-size:xx-large;font-weight:bold;margin-bottom:0.5ex;line-adjust:0">Classic Shell Scripting Notes</div></div>
+<div class="authors align-center" style="text-align:center;width:80%;line-adjust:0"><table class="authorrow columns block" style="margin-top:2ex;width:100%;line-adjust:0">
+<tbody><tr><td class="author column" style="text-align:center;line-adjust:0">
+<div class="authorname" style="font-size:large;line-adjust:0">Lu, Phil</div></td></tr></tbody></table></div></div><h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">1</span>.&#8194;</span>背景知识</h2>
+<ul class="ul list-dash compact">
+<li class="li ul-li list-dash-li compact-li">POSIX
+
+<blockquote>
+POSIX，Portable Operating System Interface。<br>
+是UNIX系统的一个设计标准，很多类UNIX系统也在支持兼容这个标准，如Linux。<br>
+遵循这个标准的好处是软件可以跨平台。所以windows也支持就很容易理解了，那么多优秀的开源软件，支持了这个这些软件就可能有windows版本，就可以完善丰富windows下的软件。
+</blockquote></li></ul>
+<h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">2</span>.&#8194;</span>入门</h2><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.1</span>.&#8194;</span>#!</h3>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  cat &gt; nursers
+  #! /bin/bash -
+  
+  who | wc -l</code></pre>
+<p class="p noindent para-continued">之后每条命令都会用bash运行
+所以，如果是py文件可以在第一行加上#! /bin/python, 这样就可以使用./来运行它
+</p><h3 id="sec-printf" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.2</span>.&#8194;</span>printf</h3>
+<ul class="ul list-dash compact">
+<li class="li ul-li list-dash-li compact-li">printf 命令
+用法与C语言非常接近
+</li></ul>
+<h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.3</span>.&#8194;</span>重定向与管道</h3><h4 id="sec--" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">2.3.1</span>.&#8194;</span>&lt;&#160;改变标准输入</h4>
+<blockquote>
+
+<p class="p noindent">tr命令<br>
+translate charactors  
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  tr -d &#39;0-9&#39;</code></pre>
+<p class="p noindent para-continued">可以将标准输入中的数字全都删除
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  tr -d &#39;0-9&#39; &lt; mytext.txt</code></pre>
+<p class="p noindent para-continued">这就改变了标准输入而是将txt文件中的内容进行修改
+</p></blockquote><h4 id="sec--" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">2.3.2</span>.&#8194;</span>>&#160;改变标准输出</h4><h4 id="sec--" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">2.3.3</span>.&#8194;</span>>>&#160;输出到文件时不覆盖文件而是附加</h4><h4 id="sec--" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">2.3.4</span>.&#8194;</span>|&#160;建立管道</h4>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  program1 | program2</code></pre>
+<p class="p noindent para-continued">将program1的标准输出修改为program2的标准输入
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  tr -d &#39;\r&#39; &lt; mytext.txt | sort &gt; mytext2.txt</code></pre>
+<p class="p noindent para-continued">过程:
+</p>
+<ol class="ol compact">
+<li class="li ol-li compact-li">tr的标准输入改成mytext.txt  
+</li>
+<li class="li ol-li compact-li">tr的标准输出变为sort的标准输入  
+</li>
+<li class="li ol-li compact-li">sort的标准输出重定向到mytext2.txt  
+</li></ol>
+<h4 id="sec-devnulldevtty" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">2.3.5</span>.&#8194;</span>/dev/null和/dev/tty</h4>
+<p class="p noindent">/dev/null是一个垃圾桶，所有输出到这里的数据都会被扔掉  
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>    echo 12321 &gt; /dev/null</code></pre>
+<p class="p noindent para-continued">/dev/tty将重定向一个终端，键盘输入maybe，所以这个是用来作为输入的
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  read password &lt; /dev/tty</code></pre>
+<p class="p noindent para-continued">将会强制从/dev/tty中读取数据，一般情况下不写问题也不大貌似
+</p>
+<blockquote>
+
+<p class="p noindent">stty -echo<br>
+可以将输入不显示在屏幕上<br>
+stty echo<br>
+重新显示  
+</p></blockquote><h3 id="sec-shell" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.4</span>.&#8194;</span>Shell脚本的参数</h3>
+<p class="p noindent">$1代表第一个参数
+$2代表第二个参数
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>  cat &gt; finduser
+  #! /bin/sh
+  
+  who | grep $1
+  ^D</code></pre>
+<p class="p noindent para-continued">使用的时候就可以./finduser lxc
+</p><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.5</span>.&#8194;</span>简单的执行跟踪</h3>
+<p class="p noindent">set -x可以设置是否跟踪命令，跟踪命令是指每条命令执行时候在前面价一个 + 并显示出来
+</p><h3 id="sec-profile-bashrc" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.6</span>.&#8194;</span>.profile .bashrc区别</h3>
+<p class="p noindent">.profile是每次登陆时运行<br>
+.bashrc是每次运行bash时运行
+</p>
+<div class="logomadoko" style="display:block;text-align:right;font-size:xx-small;margin-top:4em">Created with&nbsp;<a href="https://www.madoko.net">Madoko.net</a>.</div><span data-line=""></span></div>
+</body>
+
+</html>
