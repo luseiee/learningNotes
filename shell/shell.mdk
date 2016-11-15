@@ -20,6 +20,7 @@ Logo          : True
   who | wc -l
 ```
 之后每条命令都会用bash运行
+所以，如果是py文件可以在第一行加上#! /bin/python, 这样就可以使用./来运行它
 ## printf
 - printf 命令
 用法与C语言非常接近
@@ -67,3 +68,22 @@ translate charactors
 可以将输入不显示在屏幕上  
 stty echo  
 重新显示  
+
+## Shell脚本的参数
+\$1代表第一个参数
+\$2代表第二个参数
+```
+  cat > finduser
+  #! /bin/sh
+  
+  who | grep $1
+  ^D
+```
+使用的时候就可以./finduser lxc
+
+## 简单的执行跟踪
+set -x可以设置是否跟踪命令，跟踪命令是指每条命令执行时候在前面价一个 + 并显示出来
+
+## .profile .bashrc区别
+.profile是每次登陆时运行  
+.bashrc是每次运行bash时运行
