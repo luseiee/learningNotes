@@ -19,6 +19,7 @@ Logo          : True
   
   who | wc -l
 ```
+
 之后每条命令都会用bash运行
 所以，如果是py文件可以在第一行加上#! /bin/python, 这样就可以使用./来运行它
 ## printf
