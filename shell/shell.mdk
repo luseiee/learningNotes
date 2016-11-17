@@ -6,7 +6,6 @@ Logo          : True
 [TITLE]
 
 # 背景知识
-
 - POSIX
 > POSIX，Portable Operating System Interface。  
 是UNIX系统的一个设计标准，很多类UNIX系统也在支持兼容这个标准，如Linux。  
@@ -20,11 +19,13 @@ Logo          : True
   
   who | wc -l
 ```
+  
 之后每条命令都会用bash运行
 所以，如果是py文件可以在第一行加上#! /bin/python, 这样就可以使用./来运行它
 ## printf
 - printf 命令
 用法与C语言非常接近
+dafshf
 
 ## 重定向与管道
 ### <\ 改变标准输入
