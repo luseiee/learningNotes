@@ -61,114 +61,121 @@
 
 %mdk-data-line={26}
 \item\mdline{26}printf 命令
-用法与C语言非常接近%mdk
+用法与C语言非常接近
+dafshf%mdk
 %mdk
 \end{itemize}%mdk
 
-%mdk-data-line={29}
-\subsection{\mdline{29}2.3.\hspace*{0.5em}\mdline{29}重定向与管道}\label{section}%mdk%mdk
-
 %mdk-data-line={30}
-\subsubsection{\mdline{30}2.3.1.\hspace*{0.5em}\mdline{30}\textless{}\mdline{30}~\mdline{30}改变标准输入}\label{sec--}%mdk%mdk
+\subsection{\mdline{30}2.3.\hspace*{0.5em}\mdline{30}重定向与管道}\label{section}%mdk%mdk
 
 %mdk-data-line={31}
+\subsubsection{\mdline{31}2.3.1.\hspace*{0.5em}\mdline{31}\textless{}\mdline{31}~\mdline{31}改变标准输入}\label{sec--}%mdk%mdk
+
+%mdk-data-line={32}
 \begin{quote}%mdk
 
-%mdk-data-line={31}
-\noindent\mdline{31}tr命令\mdline{31}\mdbr
-\mdline{32}translate charactors\mdline{32} \mdline{32}%mdk
+%mdk-data-line={32}
+\noindent\mdline{32}tr命令\mdline{32}\mdbr
+\mdline{33}translate charactors\mdline{33} \mdline{33}%mdk
 \begin{mdpre}%mdk
 \noindent\preindent{2}tr~-d~'0-9'%mdk
-\end{mdpre}\noindent\mdline{36}可以将标准输入中的数字全都删除
+\end{mdpre}\noindent\mdline{37}可以将标准输入中的数字全都删除
 \begin{mdpre}%mdk
 \noindent\preindent{2}tr~-d~'0-9'~\textless{}~mytext.txt%mdk
-\end{mdpre}\noindent\mdline{40}这就改变了标准输入而是将txt文件中的内容进行修改
+\end{mdpre}\noindent\mdline{41}这就改变了标准输入而是将txt文件中的内容进行修改
 %mdk
 \end{quote}%mdk
 
-%mdk-data-line={42}
-\subsubsection{\mdline{42}2.3.2.\hspace*{0.5em}\mdline{42}\textgreater{}\mdline{42}~\mdline{42}改变标准输出}\label{sec--}%mdk%mdk
-
 %mdk-data-line={43}
-\subsubsection{\mdline{43}2.3.3.\hspace*{0.5em}\mdline{43}\textgreater{}\mdline{43}\textgreater{}\mdline{43}~\mdline{43}输出到文件时不覆盖文件而是附加}\label{sec--}%mdk%mdk
+\subsubsection{\mdline{43}2.3.2.\hspace*{0.5em}\mdline{43}\textgreater{}\mdline{43}~\mdline{43}改变标准输出}\label{sec--}%mdk%mdk
 
 %mdk-data-line={44}
-\subsubsection{\mdline{44}2.3.4.\hspace*{0.5em}\mdline{44}\textbar{}\mdline{44}~\mdline{44}建立管道}\label{sec--}%mdk%mdk
+\subsubsection{\mdline{44}2.3.3.\hspace*{0.5em}\mdline{44}\textgreater{}\mdline{44}\textgreater{}\mdline{44}~\mdline{44}输出到文件时不覆盖文件而是附加}\label{sec--}%mdk%mdk
+
+%mdk-data-line={45}
+\subsubsection{\mdline{45}2.3.4.\hspace*{0.5em}\mdline{45}\textbar{}\mdline{45}~\mdline{45}建立管道}\label{sec--}%mdk%mdk
 \begin{mdpre}%mdk
 \noindent\preindent{2}program1~\textbar{}~program2%mdk
-\end{mdpre}\noindent\mdline{48}将program1的标准输出修改为program2的标准输入
+\end{mdpre}\noindent\mdline{49}将program1的标准输出修改为program2的标准输入
 \begin{mdpre}%mdk
 \noindent\preindent{2}tr~-d~'\textbackslash{}r'~\textless{}~mytext.txt~\textbar{}~sort~\textgreater{}~mytext2.txt%mdk
-\end{mdpre}\noindent\mdline{52}过程:
-
-%mdk-data-line={54}
-\begin{enumerate}[noitemsep,topsep=\mdcompacttopsep]%mdk
-
-%mdk-data-line={54}
-\item\mdline{54}tr的标准输入改成mytext.txt\mdline{54} \mdline{54}%mdk
+\end{mdpre}\noindent\mdline{53}过程:
 
 %mdk-data-line={55}
-\item\mdline{55}tr的标准输出变为sort的标准输入\mdline{55} \mdline{55}%mdk
+\begin{enumerate}[noitemsep,topsep=\mdcompacttopsep]%mdk
+
+%mdk-data-line={55}
+\item\mdline{55}tr的标准输入改成mytext.txt\mdline{55} \mdline{55}%mdk
 
 %mdk-data-line={56}
-\item\mdline{56}sort的标准输出重定向到mytext2.txt\mdline{56} \mdline{56}%mdk
+\item\mdline{56}tr的标准输出变为sort的标准输入\mdline{56} \mdline{56}%mdk
+
+%mdk-data-line={57}
+\item\mdline{57}sort的标准输出重定向到mytext2.txt\mdline{57} \mdline{57}%mdk
 %mdk
 \end{enumerate}%mdk
 
-%mdk-data-line={58}
-\subsubsection{\mdline{58}2.3.5.\hspace*{0.5em}\mdline{58}/dev/null和/dev/tty}\label{sec-devnulldevtty}%mdk%mdk
-
 %mdk-data-line={59}
-\noindent\mdline{59}/dev/null是一个垃圾桶，所有输出到这里的数据都会被扔掉\mdline{59} \mdline{59}%mdk
+\subsubsection{\mdline{59}2.3.5.\hspace*{0.5em}\mdline{59}/dev/null和/dev/tty}\label{sec-devnulldevtty}%mdk%mdk
+
+%mdk-data-line={60}
+\noindent\mdline{60}/dev/null是一个垃圾桶，所有输出到这里的数据都会被扔掉\mdline{60} \mdline{60}%mdk
 \begin{mdpre}%mdk
 \noindent\preindent{4}echo~12321~\textgreater{}~/dev/null%mdk
-\end{mdpre}\noindent\mdline{63}/dev/tty将重定向一个终端，键盘输入maybe，所以这个是用来作为输入的
+\end{mdpre}\noindent\mdline{64}/dev/tty将重定向一个终端，键盘输入maybe，所以这个是用来作为输入的
 \begin{mdpre}%mdk
 \noindent\preindent{2}read~password~\textless{}~/dev/tty%mdk
-\end{mdpre}\noindent\mdline{67}将会强制从/dev/tty中读取数据，一般情况下不写问题也不大貌似
+\end{mdpre}\noindent\mdline{68}将会强制从/dev/tty中读取数据，一般情况下不写问题也不大貌似
 
-%mdk-data-line={68}
+%mdk-data-line={69}
 \begin{quote}%mdk
 
-%mdk-data-line={68}
-\noindent\mdline{68}stty\mdline{68} \mdline{68}-echo\mdline{68}\mdbr
-\mdline{69}可以将输入不显示在屏幕上\mdline{69}\mdbr
-\mdline{70}stty echo\mdline{70}\mdbr
-\mdline{71}重新显示\mdline{71} \mdline{71}%mdk
+%mdk-data-line={69}
+\noindent\mdline{69}stty\mdline{69} \mdline{69}-echo\mdline{69}\mdbr
+\mdline{70}可以将输入不显示在屏幕上\mdline{70}\mdbr
+\mdline{71}stty echo\mdline{71}\mdbr
+\mdline{72}重新显示\mdline{72} \mdline{72}%mdk
 %mdk
 \end{quote}%mdk
 
-%mdk-data-line={73}
-\subsection{\mdline{73}2.4.\hspace*{0.5em}\mdline{73}Shell脚本的参数}\label{sec-shell}%mdk%mdk
-
 %mdk-data-line={74}
-\noindent\mdline{74}\$\mdline{74}1代表第一个参数
-\mdline{75}\$\mdline{75}2代表第二个参数%mdk
+\subsection{\mdline{74}2.4.\hspace*{0.5em}\mdline{74}Shell脚本的参数}\label{sec-shell}%mdk%mdk
+
+%mdk-data-line={75}
+\noindent\mdline{75}\$\mdline{75}1代表第一个参数
+\mdline{76}\$\mdline{76}2代表第二个参数%mdk
 \begin{mdpre}%mdk
 \noindent\preindent{2}cat~\textgreater{}~finduser\\
 \preindent{2}\#!~/bin/sh\\
 \preindent{2}\\
 \preindent{2}who~\textbar{}~grep~\$1\\
 \preindent{2}\textasciicircum{}D%mdk
-\end{mdpre}\noindent\mdline{83}使用的时候就可以./finduser lxc
-
-%mdk-data-line={85}
-\subsection{\mdline{85}2.5.\hspace*{0.5em}\mdline{85}简单的执行跟踪}\label{section}%mdk%mdk
+\end{mdpre}\noindent\mdline{84}使用的时候就可以./finduser lxc
 
 %mdk-data-line={86}
-\noindent\mdline{86}set\mdline{86} \mdline{86}-x可以设置是否跟踪命令，跟踪命令是指每条命令执行时候在前面价一个\mdline{86} \mdline{86}+ 并显示出来%mdk
+\subsection{\mdline{86}2.5.\hspace*{0.5em}\mdline{86}简单的执行跟踪}\label{section}%mdk%mdk
 
-%mdk-data-line={88}
-\subsection{\mdline{88}2.6.\hspace*{0.5em}\mdline{88}.profile .bashrc区别}\label{sec-profile-bashrc}%mdk%mdk
+%mdk-data-line={87}
+\noindent\mdline{87}set\mdline{87} \mdline{87}-x可以设置是否跟踪命令，跟踪命令是指每条命令执行时候在前面价一个\mdline{87} \mdline{87}+ 并显示出来%mdk
 
 %mdk-data-line={89}
-\noindent\mdline{89}.profile是每次登陆时运行\mdline{89}\mdbr
-\mdline{90}.bashrc是每次运行bash时运行%mdk
+\subsection{\mdline{89}2.6.\hspace*{0.5em}\mdline{89}.profile .bashrc区别}\label{sec-profile-bashrc}%mdk%mdk
 
-%mdk-data-line={92}
+%mdk-data-line={90}
+\noindent\mdline{90}.profile是每次登陆时运行\mdline{90}\mdbr
+\mdline{91}.bashrc是每次运行bash时运行%mdk
+
+%mdk-data-line={93}
+\section{\mdline{93}3.\hspace*{0.5em}\mdline{93}查找与替换}\label{section}%mdk%mdk
+
+%mdk-data-line={95}
+\subsection{\mdline{95}3.1.\hspace*{0.5em}\mdline{95}正则表达式与BRE，ERE}\label{sec-breere}%mdk%mdk
+
+%mdk-data-line={98}
 \begin{mdbmargintb}{4em}{}%mdk
 \begin{mdflushright}%mdk
-{\tiny\mdline{93}Created with~\href{https://www.madoko.net}{Madoko.net}.}%mdk
+{\tiny\mdline{99}Created with~\href{https://www.madoko.net}{Madoko.net}.}%mdk
 \end{mdflushright}%mdk
 \end{mdbmargintb}%mdk%mdk
 
