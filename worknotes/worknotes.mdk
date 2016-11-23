@@ -21,7 +21,11 @@ Author        : Lu, Phil
 
 ## Cluster
 
-有些role是cluster的，cluster的特点是服务器之间互相通信而且有一个server takes the lead，当有一半的server挂掉的时候整个cluster才会挂掉。  
-ebay的Role中只有部分有关big data的Role才会使用cluster，运维成本大一些。
-
+- 有些role是cluster的，cluster的特点是服务器之间互相通信而且有一个server takes the lead，当有一半的server挂掉的时候整个cluster才会挂掉。  
+- ebay的Role中只有部分有关big data的Role才会使用cluster，运维成本大一些。
+- 一个cluster有多个shard，每个shard处理不同的工作，一个cluster中仍然有16个server，并且一个shard中有8个server配合工作。
+一个shard中的8个server中有一个down掉会有其他server take the lead.
+- 当一个shard中有一半的server有问题时可能会使这个shard工作不正常。
+- 一个server会为不同的shard进行工作，但是一个server出问题不一定会影响它所服务的所有的shard
+- debug一个cluster的时候不能采用kill一个server的方式，而且shutdown一个server需要很长时间，因为它需要把data传递给同一个shard中的许多其他server中。
 [reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
