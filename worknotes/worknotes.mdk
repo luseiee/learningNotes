@@ -21,11 +21,20 @@ Author        : Lu, Phil
 
 ## Cluster
 
-- 有些role是cluster的，cluster的特点是服务器之间互相通信而且有一个server takes the lead，当有一半的server挂掉的时候整个cluster才会挂掉。  
+- 有些role是cluster的，cluster的特点是服务器(在shard中称为node)之间互相通信而且有一个server takes the lead，
+当有一半的server挂掉的时候整个cluster才会挂掉。  
 - ebay的Role中只有部分有关big data的Role才会使用cluster，运维成本大一些。
 - 一个cluster有多个shard，每个shard处理不同的工作，一个cluster中仍然有16个server，并且一个shard中有8个server配合工作。
 一个shard中的8个server中有一个down掉会有其他server take the lead.
-- 当一个shard中有一半的server有问题时可能会使这个shard工作不正常。
 - 一个server会为不同的shard进行工作，但是一个server出问题不一定会影响它所服务的所有的shard
-- debug一个cluster的时候不能采用kill一个server的方式，而且shutdown一个server需要很长时间，因为它需要把data传递给同一个shard中的许多其他server中。
-[reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
+- debug一个cluster的时候不能采用kill一个server的方式，而且shutdown一个server需要很长时间，
+因为它需要把data传递给同一个shard中的许多其他server中。
+> RAID 5, 与cluster概念类似，用于存储技术: 
+RAID Level 5是一种储存性能、数据安全和存储成本兼顾的存储解决方案。它使用的是Disk Striping（硬盘分区）技术。RAID 5至少需要三块硬盘，
+RAID 5不是对存储的数据进行备份，而是把数据和相对应的奇偶校验信息存储到组成RAID5的各个磁盘上，
+并且奇偶校验信息和相对应的数据分别存储于不同的磁盘上。当RAID5的一个磁盘数据发生损坏后，可以利用剩下的数据和相应的奇偶校验信息去恢复被损坏的数据。
+
+- 当shard中有node不正常的时候，这种状态被称为degraded，这时不会影响正常工作，但是需要去进行recovery
+- ebay使用的cluster平台是Solr
+> Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene™.
+- ebay使用的管理程序是CDT，这是ebay自己开发的
