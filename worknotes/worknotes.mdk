@@ -9,6 +9,9 @@ Author        : Lu, Phil
 * POD1, POD2: 两个几乎一样的server组
 * Role: 一个POD下有许多不同的Role，每个Role负责网站的不同的功能，每个role下都有若干个server。通常为偶数个，比如说16个。
 * PoolA, PoolB: 每个Role下的服务器被分为两个Pool，PoolA是单数号服务器，PoolB是偶数号服务器
+* Role based design: 每个role下的server做exact same job，因此当其中一个或几个出问题的时候不会影响网站的正常运作。
+* Physical Machine & Virtual Machine: 在整个system中，有些server是virtual machine，有一些则是physical，在远程看来它们是一模一样的，
+但是当问题出现需要重启的时候，physical machine就必须要人去，所以CDC（ebay在上海公司）无法去操作类似reboot的工作。
 
 ## Deploy Process
 
