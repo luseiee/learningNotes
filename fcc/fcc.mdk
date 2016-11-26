@@ -11,5 +11,10 @@ Author        : Lu, Phil
 ```html
   <h1 style="color: green" id="orange-text" class="pink-text blue-text">Hello World!</h1>
 ```
-- 属性后面加上! important可以防止被覆盖
-```html  
+- 属性后面加上! important可以防止被覆盖  
+```html
+  .pink-text {
+    color: pink !important;
+  }
+```
+    
