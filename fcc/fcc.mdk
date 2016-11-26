@@ -1,0 +1,15 @@
+Title         : FreeCodeCamp
+Author        : Lu, Phil
+
+[TITLE]
+
+# Html & Css
+- id只能有一个，多个元素可以是一个class
+- padding是元素的大小，margin是元素旁边的边界的大小。  
+就好比padding是我人多大，而margin是我占了多大一块地方
+- css发生冲突时，self>id > class
+```html
+  <h1 style="color: green" id="orange-text" class="pink-text blue-text">Hello World!</h1>
+```
+- 属性后面加上! important可以防止被覆盖
+```html  
