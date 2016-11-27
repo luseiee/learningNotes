@@ -17,4 +17,26 @@ Author        : Lu, Phil
     color: pink !important;
   }
 ```
-    
+
+# Bootstrap
+- 我们需要把所有的HTML内容放在class为container-fluid的div下。
+- 通过使用 span 元素，你可以把几个元素放在一起。你甚至可以用此为一个元素的不同部分指定样式。
+```html
+  <p>Things cats <span class="text-danger">love</span>:</p>
+```
+- 把div带上class=row，然后在其中用div class="col-md-*"则可以去适应宽度，一共等分成12份
+```
+  <div class="row">
+    <div class="col-xs-8">
+      <h2 class="text-primary text-center">CatPhotoApp</h2>
+    </div>
+    <div class="col-xs-4">
+      <a href="#"><img class="img-responsive thick-green-border" src="/images/relaxing-cat.jpg"></a>
+    </div>
+  </div>
+```
+
+# Font Awesome
+- ```
+  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
+```
