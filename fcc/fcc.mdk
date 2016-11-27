@@ -19,6 +19,9 @@ Author        : Lu, Phil
 ```
 
 # Bootstrap
+> Bootstrap将会根据你的屏幕的大小来调整HTML元素的大小 —— 强调 响应式设计的概念。
+通过响应式设计，你无需再为你的网站设计一个手机版的。它在任何尺寸的屏幕上看起来都会不错。
+
 - 我们需要把所有的HTML内容放在class为container-fluid的div下。
 - 通过使用 span 元素，你可以把几个元素放在一起。你甚至可以用此为一个元素的不同部分指定样式。
 ```html
@@ -37,6 +40,116 @@ Author        : Lu, Phil
 ```
 
 # Font Awesome
-- ```
+> Font Awesome 是一个非常方便的图标库。这些图标都是矢量图形，被保存在 .svg 的文件格式中。这些图标就和字体一样，你可以通过像素单位指定它们的大小，它们将会继承其父HTML元素的字体大小。
+
+- 
+```
   <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
+```
+- 像这样可以给文字旁边插上矢量小图标
+```html
+  <button class="btn btn-block btn-danger"><i class="fa fa-trash"></i> Delete</button>
+```
+
+# jQuery
+> 最流行的JavaScript库jQuery
+
+- 在没有document ready function以前，你的代码会在HTML没有渲染完成就执行，这样会产生bug。
+```html
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated bounce");    增加与删除class
+    $(".well").addClass("animated shake");
+    $("#target3").addClass("animated fadeOut");
+    $("button").removeClass("btn-default");
+    $("#target1").css("color", "blue");         设置css，css的属性和值用逗号分开
+    $("button").prop("disabled", true);         prop用于改变属性，注意属性和css不同，css是在style里的
+  });
+</script>
+```
+- 我们已经在后台为你引入了jQuery库和Animate.css库
+- 注意选择方式和css是差不多滴
+
+---
+# Codes
+## 小猫app
+```html
+<link href="//fonts.gdgdocs.org/css?family=Lobster" rel="stylesheet" type="text/css">
+<style>
+  h2 {
+    font-family: Lobster, Monospace;
+  }
+
+  .thick-green-border {
+    border-color: green;
+    border-width: 10px;
+    border-style: solid;
+    border-radius: 50%;
+  }
+
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-8">
+      <h2 class="text-primary text-center">CatPhotoApp</h2>
+    </div>
+    <div class="col-xs-4">
+      <a href="#"><img class="img-responsive thick-green-border" src="/images/relaxing-cat.jpg"></a>
+    </div>
+  </div>
+  <img src="/images/running-cat.jpg" class="img-responsive">
+  <div class="row">
+    <div class="col-xs-4">
+      <button class="btn btn-block btn-primary"><i class="fa fa-thumbs-up"></i> Like</button>
+    </div>
+    <div class="col-xs-4">
+      <button class="btn btn-block btn-info"><i class="fa fa-info-circle"></i> Info</button>
+    </div>
+    <div class="col-xs-4">
+      <button class="btn btn-block btn-danger"><i class="fa fa-trash"></i> Delete</button>
+    </div>
+  </div>
+  <p>Things cats <span class="text-danger">love:</span></p>
+  <ul>
+    <li>cat nip</li>
+    <li>laser pointers</li>
+    <li>lasagna</li>
+  </ul>
+  <p>Top 3 things cats hate:</p>
+  <ol>
+    <li>flea treatment</li>
+    <li>thunder</li>
+    <li>other cats</li>
+  </ol>
+  <form action="/submit-cat-photo">
+    <div class="row">
+      <div class="col-xs-6">
+        <label><input type="radio" name="indoor-outdoor"> Indoor</label>
+      </div>
+      <div class="col-xs-6">
+        <label><input type="radio" name="indoor-outdoor"> Outdoor</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4">
+        <label><input type="checkbox" name="personality"> Love</label>
+      </div>
+      <div class="col-xs-4">
+        <label><input type="checkbox" name="personality"> Lazy</label>
+      </div>
+      <div class="col-xs-4">
+        <label><input type="checkbox" name="personality"> Crazy</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-7">
+    <input type="text" class="form-control" placeholder="cat photo URL" required>
+      </div>
+      <div class="col-xs-5">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
 ```
