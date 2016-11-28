@@ -17,6 +17,7 @@ Author        : Lu, Phil
     color: pink !important;
   }
 ```
+- body标签代表整个页面的内容，属于html内，与head并列
 
 # Bootstrap
 > Bootstrap将会根据你的屏幕的大小来调整HTML元素的大小 —— 强调 响应式设计的概念。
@@ -58,12 +59,19 @@ Author        : Lu, Phil
 ```html
 <script>
   $(document).ready(function() {
-    $("button").addClass("animated bounce");    增加与删除class
+    $("button").addClass("animated bounce");    选择器方式，增加与删除class
     $(".well").addClass("animated shake");
     $("#target3").addClass("animated fadeOut");
     $("button").removeClass("btn-default");
     $("#target1").css("color", "blue");         设置css，css的属性和值用逗号分开
     $("button").prop("disabled", true);         prop用于改变属性，注意属性和css不同，css是在style里的
+    $("h3").html("<em>jQuery Playground</em>");   修改标签内的内容，另外还有.text()方法，里面的所有符号会被转义成文本
+    $("#target4").remove();                       移除元素
+    $("#target2").appendTo("#right-well");      把某个元素移动到另一个div中去
+    $("#target2").clone().appendTo("#right-well");   多个方法可以一起用
+    $("#target1").parent().css("background-color", "blue");  访问父元素
+    $("#right-well").children().css("color", "orange")     访问子元素
+    $(".target:nth-child(3)").addClass("animated bounce");   存疑
   });
 </script>
 ```
