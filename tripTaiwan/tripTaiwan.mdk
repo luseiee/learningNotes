@@ -1,0 +1,14 @@
+Title         : 台湾攻略
+Author        : 陆小超
+
+[TITLE]
+
+# 地图概览 
+![map]
+
+[map]: images/map.jpg "map" { width:auto; max-width:90% }
+
+
+* Read the [reference manual].
+
+[reference manual]: http://research.microsoft.com/en-us/um/people/daan/madoko/doc/reference.html  "Madoko reference manual"
