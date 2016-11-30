@@ -98,6 +98,17 @@ Author        : Lu, Phil
   myStr[0] = "H"; //这行会报错
   myStr = "Hello World";
 ```
+- 数组
+```JavaScript
+  var array = ["John", 23];
+```
+- array.push(n), 把n放到数组最末端
+- array.pop(),把最后一个数组元素取出来
+- array.shift(),取出第一个元素
+- 3 == '3' is true
+- 3 === '3' is false
+- 同理 != !==
+- && ||
 
 
 
