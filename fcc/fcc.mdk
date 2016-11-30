@@ -78,7 +78,44 @@ Author        : Lu, Phil
 - 我们已经在后台为你引入了jQuery库和Animate.css库
 - 注意选择方式和css是差不多滴
 
+# JavaScript
+- var a 来定义变量
+- 为初始化的变量，程序内部会给它一个值undefined
+```JavaScript
+  var a;     
+  var c;
+ a = a + 1;        
+ c = c + " String!";
+ Output:
+ a = NaN, b = NaN, c = 'undefined String!'
+```
+- 变量命名请用驼峰命名法
+- 字符串中请使用 \\ 来进行转义
+- 字符串a, a.length获取长度, a\[0\]获取第0位字符
+- String Immutability字符串不可变性
+```JavaScript
+  var myStr = "Jello World";
+  myStr[0] = "H"; //这行会报错
+  myStr = "Hello World";
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
+
+---
+
 # Codes
 ## 小猫app
 ```html
