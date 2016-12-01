@@ -109,6 +109,20 @@ Author        : Lu, Phil
 - 3 === '3' is false
 - 同理 != !==
 - && ||
+- 函数
+- 对象,感觉好像字典
+```JavaScript
+  var ourDog = {
+    "name": "Camper",
+    "legs": 4,
+    "tails": 1,
+    "friends": ["everything!"]
+  };
+  ourDog.name;    //访问属性
+  ourDog["name"];  //the same
+  ourDog.sex = "male"; //添加属性
+  delete ourDog.tails; //删除属性
+```
 
 
 
