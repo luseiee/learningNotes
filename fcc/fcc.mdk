@@ -80,7 +80,7 @@ Author        : Lu, Phil
 
 # JavaScript
 - var a 来定义变量
-- 为初始化的变量，程序内部会给它一个值undefined
+- 未初始化的变量，程序内部会给它一个值undefined
 ```JavaScript
   var a;     
   var c;
@@ -123,7 +123,31 @@ Author        : Lu, Phil
   ourDog.sex = "male"; //添加属性
   delete ourDog.tails; //删除属性
 ```
+> JavaScript Object Notation 简称 JSON，它使用JavaScript对象的格式来存储数据。JSON是灵活的，因为它允许 数据结构 是 字符串，数字，布尔值，字符串，和 对象 的任意组合。
 
+- 嵌套的JSON对象
+ 
+```JavaScript
+  var myStorage = {
+    "car": {
+      "inside": {
+        "glove box": "maps",
+        "passenger seat": "crumbs"
+      },
+      "outside": {
+        "trunk": "jack"
+      }
+    }
+  };
+  // 这是一个嵌套的JSON对象 
+  var gloveBoxContents = myStorage.car.inside["glove box"]; // Change this line
+```
+- for循环
+```JavaScript
+  for (var i = 0; i < 10; i += 2) {
+    ourArray.push(i);
+  }
+```
 
 
 
