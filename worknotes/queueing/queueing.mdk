@@ -1,0 +1,76 @@
+Title         : Queueing Model For StubHub
+Author        : Lu, Phil
+
+[TITLE]
+
+# Which Model to Use
+
+## Single Station M/M/m Model
+
+> Take SPA role as an example.
+
+- We may consider the simple service like SPA as a M/M/m model. 
+
+- It corresponds to the **qsmmm** function in Octave queueing package. The reason is that we can regard SPA Role as a black box, it accepts requests of the same one class and gives the output.
+
+** Required input **
+
+1. Arrival Rate lambda: Get from Splunk or other platform.
+
+2. Service Rate mu: Get data from Splunk or other platform.
+
+3. m: m means the number of servers. It's more proper to regard m as the maximum number of requests the server can deal with at the same time.
+
+## Single Class Open Queueing Network
+
+> Take POD1 as an example.
+
+- According to us, POD1 is very suitable for Single Class Open Queueing Network. 
+
+- It corresponds to the **qnos** function in Octave. Each role is regarded as one service center. 
+
+- There's a condition for using this model, we must consider the request for one specific role is of the same class.
+
+** Required input **
+
+1. Arrival Rate to each role.
+
+2. Routing matrix for these roles. If no routing happens, just assign 0 to it.
+
+3. The service rate for each role. And the maximum capacity of each role.
+
+## Multiple Class Open Queueing Network
+
+> Take POD1 as an example.
+
+- If for each role, there are different type of requests. We need one more dimension for class C. 
+
+- It corresponds to the **qnom** function in Octave.
+
+** Required input **
+
+Similar to single class situation, all add one dimension.
+
+# Project Plan for Recent
+
+> Basically the same as the document we received.
+
+> We may start from SPA role.
+
+1. Learn to use the prototype of Octave queueing package. *Finished.*
+
+2. Develop a simulation tool for these queueing models. * Working on it. *
+
+3. Data gathering from Splunk or ExtraHop. *Need Support.*
+
+
+- make sure the arriving fits the Poisson distribution.
+- get the arriving rate
+- check if the service time fits the exponential distribution.
+- get the serving rate
+- test the capacity of SPA server. This may be done on POD31.
+
+
+4. Use the data gathered to determine if the prototype and simulation tool are successful.
+
+5. Extend the project to the whole POD.
