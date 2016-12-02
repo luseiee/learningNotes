@@ -1,0 +1,45 @@
+Title         : Python
+Author        : You
+
+[TITLE]
+
+# Day One 
+## 输入输出
+```python
+  name = input('please enter your name: ')
+  print('hello,', name)
+```
+
+## 变量类型
+```python
+  n = 123               //整数
+  f = 456.789         //浮点
+  a = True and False or True //布尔
+  b = None              //空
+  s1 = 'Hello, world'
+  s3 = r'Hello, "Bart"'    //r为默认不转义
+  s4 = r'''Hello,         //```内为自动换行
+  Lisa!'''
+```
+
+## 编码
+一般脚本前加上这两行
+```python
+  #!/usr/bin/env python3
+  # -*- coding: utf-8 -*-
+```
+
+## list & tuple
+```python
+  classmates = ['Michael', 'Bob', 1.23, ['asp', 'php']]     //list
+  len(classmates)      
+  classmates[0]
+  classmates[-1]
+  classmates.append('Adam')     //加在末尾
+  classmates.insert(1, 'Jack')    //加在指定位置
+  classmates.pop(1)       //删除制定元素并返回
+  
+  t = (1, 2)      //tuple,一旦指定不能改变
+  t = ('a', 'b', ['A', 'B'])    //指向一个list，就不能改成指向其他对象
+  t[2][0] = 'X'    //但指向的这个list本身是可变的
+```
