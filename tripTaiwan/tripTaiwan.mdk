@@ -155,6 +155,11 @@ Package : [UTF8]ctex
 ## 兑换台币
 3200台币fromTKH = 700CNY
 
+## 住宿
+高雄 两晚 397CNY
+垦丁 两晚 1598TWD
+花莲 一晚 790TWD
+
 
 [ticket2]: images/ticket2.jpg "ticket2" { width:auto; max-width:90% }
 [ticket1]: images/ticket1.jpg "ticket1" { width:auto; max-width:90% }
