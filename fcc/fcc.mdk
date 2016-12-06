@@ -167,8 +167,8 @@ Author        : Lu, Phil
     this.setGear = function(g) {
       this.gear = g;
     };
-  
   };
+  myBike = new Bike(); //这种方式创建对象
 ```
 
 - 数组有一个map方法，接收一个函数，可以对数组中的每一个元素进行操作
@@ -216,6 +216,27 @@ Author        : Lu, Phil
   str.toLowerCase()
   str.replace("a") //用a来分割字符串并返回一个数组
   str.slice(start [,end]) //字符串切片, 同样的，array也有这种语法
+```
+
+- 如何判断NaN, NaN == NaN返回值是false！！
+
+- 算法题里有一道题不知道怎么传入额外传入的参数
+```javascript
+  function destroyer(arr) {
+    // Remove all the values
+    var args = Array.prototype.slice.call(arguments); //这两行很重要！！
+    a = args.splice(1);   //取出第二项开始的内容
+    var ret = arr.filter(function(val) {
+      for (var i = 0; i < a.length; i++) {
+        if (val == a[i])
+          return false
+      }
+      return true
+    })
+    return ret;
+  }
+  
+  destroyer([1, 2, 3, 1, 2, 3], 2, 3);
 ```
 
 
