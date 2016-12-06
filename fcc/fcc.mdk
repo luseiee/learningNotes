@@ -155,6 +155,7 @@ Author        : Lu, Phil
 # Object Oriented and Functional Coding
 
 - 这种写法很类似于python的类了，称为js的面向对向和函数编程
+
 ```javaScript
   var Bike = function() {
     this.wheels = 1; //这种就可以用myBike.wheels来访问
@@ -168,7 +169,54 @@ Author        : Lu, Phil
     };
   
   };
+```
 
+- 数组有一个map方法，接收一个函数，可以对数组中的每一个元素进行操作
+
+```javaScript
+  var timesFour = oldArray.map(function(val){
+    return val * 4;
+  });
+```
+
+- 数组还有一个reduce方法，每次对下一个值进行操作，reduce接受一个函数和一个可选的第二个值作为初始值
+
+```javaScript
+  var singleVal = array.reduce(function(previousVal, currentVal) {
+    return previousVal - currentVal;
+  }, 0);
+```
+
+- 数组的filter方法，留下返回为true的值
+
+```javaScript
+  var newArray = oldArray.filter(function(val) {
+    return val<6;});
+```
+
+- 数组的sort方法，函数的返回值大的判为大
+
+```javascript
+  var array = [1, 12, 21, 2];
+  array.sort(function(a, b) {
+    return a - b;
+  });
+```
+> Attention,array.sort()是按字符串排序的，不是按数字大小哦
+
+- Array.reverse() 反转数组
+
+- Array.concat(anotherArray) 连接数组
+
+- string = Array.join(" ")
+
+- string的一些函数
+```javascript
+  str.replace(re_or_substr, new_str) //替换,支持正则表达式，这个是不会改变原来的str的
+  str.toLowerCase()
+  str.replace("a") //用a来分割字符串并返回一个数组
+  str.slice(start [,end]) //字符串切片, 同样的，array也有这种语法
+```
 
 
 
