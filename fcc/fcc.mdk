@@ -152,6 +152,23 @@ Author        : Lu, Phil
   }
 ```
 
+# Object Oriented and Functional Coding
+
+- 这种写法很类似于python的类了，称为js的面向对向和函数编程
+```javaScript
+  var Bike = function() {
+    this.wheels = 1; //这种就可以用myBike.wheels来访问
+    var gear = 4; //把属性设为var则无法通过外界访问，比如myBike.gear
+    
+    this.getGear = function() {  //这两种就是熟悉的类的方法啦
+      return this.gear;
+    };
+    this.setGear = function(g) {
+      this.gear = g;
+    };
+  
+  };
+
 
 
 
