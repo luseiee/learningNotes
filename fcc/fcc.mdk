@@ -56,7 +56,7 @@ Author        : Lu, Phil
 > 最流行的JavaScript库jQuery
 
 - 在没有document ready function以前，你的代码会在HTML没有渲染完成就执行，这样会产生bug。
-```html
+```javascript
 <script>
   $(document).ready(function() {
     $("button").addClass("animated bounce");    选择器方式，增加与删除class
@@ -75,6 +75,9 @@ Author        : Lu, Phil
     $($(".slot")[0]).html(slotOne);     选取第一个class为slot的元素，并将其内容设为slotOne
   });
 </script>
+```
+```javascript
+  $(function() {...}); //好像是带document.ready的简写方式？
 ```
 - 我们已经在后台为你引入了jQuery库和Animate.css库
 - 注意选择方式和css是差不多滴
@@ -238,6 +241,60 @@ Author        : Lu, Phil
   
   destroyer([1, 2, 3, 1, 2, 3], 2, 3);
 ```
+
+# JSON APIs and Ajax
+
+```javascript
+  <script>
+  $(document).ready(function() {
+      $("#getMessage").on("click", function() {
+        $.getJSON("/json/cats.json", function(json) {  
+          var html = "";
+          json = json.filter(function(val) {
+            return (val.id !== 1);
+          });
+          json.forEach(function(val) {
+            html += "<div class = 'cat'>"
+            html += "<img src = '" + val.imageLink + "'>"
+            html += "</div>"
+          });
+          $(".message").html(html);
+        });
+      });
+    });
+  </script>
+  <div class="container-fluid">
+    <div class = "row text-center">
+      <h2>Cat Photo Finder</h2>
+    </div>
+    <div class = "row text-center">
+      <div class = "col-xs-12 well message">
+        The message will go here
+      </div>
+    </div>
+    <div class = "row text-center">
+      <div class = "col-xs-12">
+        <button id = "getMessage" class = "btn btn-primary">
+          Get Message
+        </button>
+      </div>
+    </div>
+  </div>
+```
+- 这段代码干了这么一件事情，从#getMessage button事件被触发，获取json文件，然后处理json对象，并应json的
+一些函数去做处理，并返回html代码动态加入原代码中。
+
+> 当你需要根据服务器返回的数据来动态改变页面的时候，应用程序接口(API)就派上用场了。  
+记住，API——应用程序接口(Application Programming Interface)是计算机之间相互交流沟通的工具。  
+许多网站的应用程序接口(API)都是通过一种称为JSON格式的数据来传输的，JSON 是 JavaScript Object Notation的简写。
+
+- 目前的理解，JSON API就是从其他url获取数据的接口
+
+- Ajax则是一种技术，比如onclick了之后去部分改变代码
+
+> AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。  
+AJAX 不是新的编程语言，而是一种使用现有标准的新方法。  
+AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。
 
 
 
