@@ -317,3 +317,27 @@ s ：特殊权限
 ```
 script < infile > outfile
 ```
+
+# 变量、判断、重复动作
+
+## export, readonly, env, unset命令
+```
+  LXC=zhu    普通变量，注意不要加空格
+  export LXC
+  export LXC=zhu
+  export -p
+  export命令是把变量放到环境里，可供应所有执行中的程序使用，-p是显示所有环境变量
+  unset LXC    unset命令会删除变量
+  readonly LXC=zhu     创建只读变量
+  readonly -p
+  env LXC=dazhu command 这样会在command中使用新的LXC变量，但是shell中原来的LXC不变
+```
+
+## $:变量展开
+```
+  $LXC    最普通的
+  ${LXC}   复杂脚本中最好这样写
+  ${LXC:-word} 存在则返回LXC，否则返回word
+  ${LXC:=word} 存在则返回LXC，否则返回word且把LXC赋值为word
+  ....类似的还有不少
+```
