@@ -507,6 +507,7 @@ done
 ```
 
 ## getops命令
+
 简化脚本的参数处理
 ```
   #!/bin/bash
@@ -530,3 +531,20 @@ done
   done
 ```
 
+## 函数
+```
+  wait_for_user () {
+    until who | grep "$1" > /dev/null
+    do
+      sleep ${2:-30}
+    done
+  }
+
+用法
+  wait_for_user phil
+  wait_for_user phil 60
+```
+
+- 在函数中，`$1, $2`变成了传递给函数的参数而不是脚本的参数，函数之行完毕就恢复
+- 函数可以使用return来返回执行状态，不写的话就默认为 `return $?`
+- 函数里并没有局部变量，和全局都是共享的 
