@@ -388,7 +388,6 @@ shell的if语句比较特殊它接受一个命令，如果执行成功则相当�
 `! && ||`可以被用于脚本中  
 有一点比较特殊，`a && b`, a失败了就不会执行b，`a || b`，a成功了不会执行b
 
-## test命令
 ## `$1, $2, ... ${10}`位置参数
 
 有一些特殊变量表示特殊的参数, `$`表示把它们显示出来：
@@ -437,3 +436,71 @@ shell的if语句比较特殊它接受一个命令，如果执行成功则相当�
 有一点比较特殊，`a && b`, a失败了就不会执行b，`a || b`，a成功了不会执行b
 
 ## test命令
+
+```
+  test [ expression ]
+  [ [ expression ] ]
+  这两种写法都是可以的
+  
+  test string   返回string是不是null
+  test -b file  file是块设备文件
+  test -d file  file是目录
+  ...
+  test s1 = s2  字符串s1与s2相同
+  test n1 -lt n2  n1小于n2
+  ...
+```
+用来返回真伪，可以用在脚本的if语句中
+```
+  一般脚本里会这样写
+  if [ "X$1" = "X-f" ]    X防止字符串是空的
+  then
+    ...
+```
+
+## case语句
+语法有点特殊，用到再查吧
+
+## for循环
+```
+  第一种：
+  for i in atl*.xml
+  do
+    echo $i
+    mv $i $i.old
+    sed '.....' < $i.old >$i
+  done
+  第二种
+  for i     # 循环命令行参数
+  do
+    case $i in
+    -f)   ...
+          ;;
+    ...
+    esac
+  done
+```
+
+## while和until循环
+```
+while(until) condition
+do
+  statements
+done
+
+while是condition成功返回就继续执行，until是反之
+```
+> shell也有break和continue
+
+## shift命令
+```
+shift让所有参数顺移  
+原来的$1没了, 原来的$2变成$1, ...
+配合
+while [ $# -gt 0 ]
+do
+  shift
+done
+可以对一个个参数进行处理！  
+```
+
