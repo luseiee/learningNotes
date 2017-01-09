@@ -582,6 +582,11 @@ done
   read lxc <&3
 ```
 
+## printf
+```
+  printf "%.2f %s\n" 123.4567 abc
+  123.46 abc
+```
 ## ~波浪号展开
 
 ```
