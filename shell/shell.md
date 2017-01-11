@@ -697,7 +697,59 @@ source是读取文件并执行其中的命令，不需要执行权限！
 
 本章介绍了两个脚本
 
-一个是path find，一个是build-all
+一个是pathfind，一个是build-all
 
+# awk程序
 
+工作模式：  
 
+`awk 'pattern {action}' file`
+
+`awk -f programfile inputfiles`
+
+一些例子：
+```
+  emp.data:
+  Beth	4.00	0
+  Dan	3.75	0
+  kathy	4.00	10
+  Mark	5.00	20
+  Mary	5.50	22
+  Susie	4.25	18
+  
+  1.基本用法：
+  awk '$3 >0 { print $1, $2 * $3 }' emp.data
+  
+  2.pattern和action都可以省略
+  省略pattern就匹配每一行
+  省略action就print匹配的行
+  
+  3.内建变量
+  $0:整行, $1~$n:第某个字段
+  NF:字段个数, $NF最后一个字段
+  NR:行号
+  
+  4.可以使用printf
+  { printf("%-8s $%6.2f\n", $1, $2 * $3) }
+  第一个规格 %-8s 将一个姓名以字符串形式在8个字符宽度的字段中左对齐输出。第二个规格 %6.2f 将薪酬以数字的形式，保留小数点后两位，在6个字符宽度的字段中输出。
+
+  5.多样的pattern
+  !($2 < 4 && $1 == "Susie")
+  
+  6.BEGIN和END
+  BEGIN用于第1行前
+  END用于最后一行后面
+  这个可以用来使得输出更明确
+  
+  7.使用变量
+      { pay = pay + $2 * $3 }
+  END { print NR, "employees"
+        print "total pay is", pay
+        print "average pay is", pay/NR
+      }
+  
+  8.内置函数
+  length($1) 统计$1字符个数
+  
+  9.action里面还支持一些for,if,while语句
+```
