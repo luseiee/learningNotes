@@ -779,4 +779,32 @@ source是读取文件并执行其中的命令，不需要执行权限！
 
 ## 临时文件
 
-可以放到/tmp中去
+- 可以放到/tmp中去
+
+- 为了防止临时文件和其他用户的文件重复了，可以使用  
+`touch abc.$$`  
+这样子创建的文件名就带上了**进程号**
+
+- 
+```
+  mktemp 创建临时文件
+  mktemp lxc.XXXXXXXX 在当前目录创建临时文件，随机值会替换XXXX
+```
+
+- 
+`cat /dev/random | od -x | tr -d ' ' | head -1`
+/dev/random和/dev/urandom可以源源不断产生随机值
+
+## 寻找文件
+
+1. locate  
+对文件名建立数据库，快速查找文件
+
+2. which
+找PATH下的文件
+
+3. type
+```
+type gcc
+gcc is /usr/locl/bin/gcc
+```
