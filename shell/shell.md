@@ -808,3 +808,24 @@ source是读取文件并执行其中的命令，不需要执行权限！
 type gcc
 gcc is /usr/locl/bin/gcc
 ```
+
+4. find
+强大
+
+## find命令
+
+```
+  find 要寻找的目录 选项
+  -atime n n天前访问的文件
+  -ctime
+  -follow
+  -group g 选定组
+  -links n 拥有n个链接
+  -ls 类似ll的样子输出
+  -mtime n n天前改过
+  -perm 选定权限
+  -name 'pattern'
+  -size n +n -n 大小为n，大于n，小于n，+-适用于其他选项
+  -type t d为目录，f为文件，l为链接
+  -user u 选定用户
+```
