@@ -887,3 +887,61 @@ diff则会详细告诉你不同点在哪里
 `echo hello | tee file`
 
 # 拼写检查
+
+spell,ispell等等，以及awk写的
+
+# 进程
+
+## ps命令
+
+```
+  ps -l 长输出
+  ps -e 显示所有进程，否则只是当前进程
+```
+
+另外top命令动态显示
+
+## kill命令
+
+kill其实是传送信号（signal）给指定的执行中的进程。
+
+kill的用法应该是
+
+`kill -signal pid`
+
+举个例子：
+```
+  kill -STOP 17787
+  sleep 3600 && kill -CONT 17787 &
+  把17787暂停，然后一小时后继续启动，&表示这条命令放到后台运行
+```
+
+kill 的默认信号是 `kill -TERM`
+
+## trap 命令
+
+> trap是一个shell内建命令，它用来在脚本中指定信号如何处理。
+比如，按Ctrl+C会使脚本终止执行，实际上系统发送了SIGINT信号给脚本进程，
+SIGINT信号的默认处理方式就是退出程序。如果要在Ctrl+C不退出程序，
+那么就得使用trap命令来指定一下SIGINT的处理方式了。
+trap命令不仅仅处理Linux信号，还能对脚本退出（EXIT）、
+调试（DEBUG）、错误（ERR）、返回（RETURN）等情况指定处理方式。
+
+举个例子
+```
+  在进程号为24286的进程中：
+  trap 'echo Ignoring HUP' HUP
+  $ kill -HUP 24286
+  $ Ignoring HUP
+```
+
+## 进程系统调用的追踪
+
+> 系统调用（英语：system call），又称为系统呼叫，
+指运行在使用者空间的程序向操作系统内核请求需要更高权限运行的服务。
+系统调用提供用户程序与操作系统之间的接口。
+大多数系统交互式操作需求在内核态执行。如设备IO操作或者进程间通信。
+
+比如fork,exit,getpid等等都是系统调用
+
+有一些
