@@ -876,3 +876,14 @@ diff则会详细告诉你不同点在哪里
   md5sum file1 file2 file3 ...
   可以列出各个文件的md5值，注意inode和文件是分开的，所以只要内容一样就可以了
 ```
+
+# 扩展实例：合并用户数据库
+
+合并两个server的/etc/passwd
+
+## tee命令
+在使用管道时往标准输出也显示
+
+`echo hello | tee file`
+
+# 拼写检查
