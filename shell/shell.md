@@ -975,3 +975,14 @@ bash另外有shopt命令来配置shell变量
 
 # 安全的shell脚本：起点
 
+一个有趣的木马,假设PATH第一个为~lxc/bin,当lxc以sudo grep运行时，
+就执行了nusty stuff
+
+```
+  /bin/grep "$@"
+  case $(whoami) in
+  root) nasty stuff
+        rm ~lxc/bin/grep
+        ;;
+  esac
+```
