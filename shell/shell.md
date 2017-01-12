@@ -960,9 +960,18 @@ trap命令不仅仅处理Linux信号，还能对脚本退出（EXIT）、
 
 # Shell可移植性议题与扩展
 
+本章比较了ksh和bash的异同点
+
 ## set命令
 
 > set命令作用主要是显示系统中已经存在的shell变量，
 以及设置shell变量的新变量值。
 
 set +o 列出所有已经设置的shell变量，这里的变量感觉更像是一些配置
+
+bash另外有shopt命令来配置shell变量
+
+在ksh中执行set显示出来完全不同，所以是当前shell的配置，个人理解
+
+# 安全的shell脚本：起点
+
