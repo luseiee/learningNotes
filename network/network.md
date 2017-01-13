@@ -104,11 +104,75 @@ Sol.
 
 面向连接的服务是先建立连接再通信。无连接服务是在传输时候带上目标地址，然后交由网络去通信。
 
-> Two networks each provide reliable connection-oriented service. One of them offers a reliable byte stream and the other offers a reliable message stream. Are these identical? If so, why is the distinction made? If not, give an example of how they differ.
+> (13) Two networks each provide reliable connection-oriented service. One of them offers a reliable byte stream and the other offers a reliable message stream. Are these identical? If so, why is the distinction made? If not, give an example of how they differ.
 
 Sol.
 
 message的话每条信息有确定边界，而byte stream则没有确定边界。
+
+> (14) What does ''negotiation'' mean when discussing network protocols? Give an example.
+
+Sol.
+
+协商就是建立一个双方接受的通信规则。
+
+> (15) Which of the OSI layers handles each of the following:
+a. (a) Dividing the transmitted bit stream into frames.
+b. (b) Determining which route through the subnet to use.
+
+Sol.
+
+Transmission Layer and Network Layer
+
+Wrong!
+
+Data link layer and Network layer
+
+> (16) If the unit exchanged at the data link level is called a frame and the unit exchanged at the network level
+is called a packet, do frames encapsulate packets or do packets encapsulate frames? Explain your
+answer.
+
+Sol.
+
+高层的应该被封到低层里去。
+
+> (17) A system has an n-layer protocol hierarchy. Applications generate messages of length M bytes. At each
+of the layers, an h-byte header is added. What fraction of the network bandwidth is filled with headers?
+
+Sol.
+
+`hn / (M + hn)`
+
+> (18) List two ways in which the OSI reference model and the TCP/IP reference model are the same. Now list
+two ways in which they differ.
+
+Sol.
+
+OSI:  
+Application       
+Representation    
+Session           
+Transmission        
+Network           
+Data link         
+Physical          
+
+TCP/IP:  
+Application: HTTP, SMTP, RTP, DNS  
+Transmission: TCP, UDP  
+internet: IP (Internet Protocal), ICMP  
+Link: DSL, SONET, 802.11, Ethernet  
+
+> (19) What is the main difference between TCP and UDP?
+
+Sol.
+
+TCP is connection oriented, reliable, fast.  
+UDP is connectionless oriented, unreliable, slow.  
+
+> (20) When a file is transferred between two computers, two acknowledgement strategies are possible. In the first one, the file is chopped up into packets, which are individually acknowledged by the receiver, but the file transfer as a whole is not acknowledged. In the second one, the packets are not acknowledged
+individually, but the entire file is acknowledged when it arrives. Discuss these two approaches.
+
 
 
 
