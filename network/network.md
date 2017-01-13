@@ -98,6 +98,17 @@ Sol.
 
 除了第一层（最底层，这里是engineer），高层之间不能有直接通信。
 
+> (12)  What is the principal difference between connectionless communication and connection-oriented communication?
+
+Sol.
+
+面向连接的服务是先建立连接再通信。无连接服务是在传输时候带上目标地址，然后交由网络去通信。
+
+> Two networks each provide reliable connection-oriented service. One of them offers a reliable byte stream and the other offers a reliable message stream. Are these identical? If so, why is the distinction made? If not, give an example of how they differ.
+
+Sol.
+
+message的话每条信息有确定边界，而byte stream则没有确定边界。
 
 
 
