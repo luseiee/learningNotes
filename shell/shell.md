@@ -1,7 +1,11 @@
 Package : ctex
+
 Title         : Classic Shell Scripting Notes
+
 Author        : Lu, Phil
+
 Sub Title   : Arnold Robbins & Nelson H.F. Beebe
+
 
 [TITLE]
 
