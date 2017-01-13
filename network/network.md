@@ -128,6 +128,8 @@ Wrong!
 
 Data link layer and Network layer
 
+这里很重要，数据是在data link层被划分为帧（frame）的
+
 > (16) If the unit exchanged at the data link level is called a frame and the unit exchanged at the network level
 is called a packet, do frames encapsulate packets or do packets encapsulate frames? Explain your
 answer.
@@ -173,6 +175,40 @@ UDP is connectionless oriented, unreliable, slow.
 > (20) When a file is transferred between two computers, two acknowledgement strategies are possible. In the first one, the file is chopped up into packets, which are individually acknowledged by the receiver, but the file transfer as a whole is not acknowledged. In the second one, the packets are not acknowledged
 individually, but the entire file is acknowledged when it arrives. Discuss these two approaches.
 
+Sol.
 
+If the network is reliable, use the second one.
 
+> (21) How long was a bit on the original 802.3 standard in meters? Use a transmission speed of 10 Mbps and
+assume the propagation speed in coax is 2/3 the speed of light in vacuum.
 
+Sol.
+
+802.3是以太网，这里计算出来是20米
+
+> (22) An image is 1024 x 768 pixels with 3 bytes/pixel. Assume the image is uncompressed. How long does it
+take to transmit it over a 56-kbps modem channel? Over a 1-Mbps cable modem? Over a 10-Mbps Ethernet? Over 100-Mbps Ethernet?
+
+Sol.
+
+337s, 19s, 1.9s, 0.19s
+
+> (23) Ethernet and wireless networks have some similarities and some differences. One property of Ethernet is that only one frame at a time can be transmitted on an Ethernet. Does 802.11 share this property with Ethernet? Discuss your answer.
+
+Sol.
+
+Wireless networks also transmit one frame at a time, but determining when one can send is more difficult. Ethernet is a broadcast bus so the sender can just listen to see if there is any traffic before sending. Due to range issues with wireless, a sender cannot be sure that there are not other transmissions just because it cannot "hear" other transmissions. Wireless senders use either a central base station or use methods discussed in Chapter 4 to avoid collisions.
+
+> (24) Wireless networks are easy to install, which makes them inexpensive since installation costs usually far overshadow equipment costs. Nevertheless, they also have some disadvantages. Name two of them.
+
+Sol.
+
+无法控制范围，容易被人利用。任何人可以接收到传送中的包。  
+此外，传输更慢。
+
+> (25) List two advantages and two disadvantages of having international standards for network protocols.
+
+Sol.
+
+好处：统一的标准使得兼容性更好，成本降低。
+坏处：不好的标准可能很难被淘汰，比如OSI比TCP／IP先进但没有被采用。
