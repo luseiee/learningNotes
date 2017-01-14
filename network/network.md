@@ -7,7 +7,9 @@ Sub Title   : Andrew S.Tanenbaum
 
 [TITLE]
 
-# 引言 Problem Solution
+# 引言
+
+## 课后习题
 
 > (1) Imagine that you have trained your St. Bernard, Bernie, to carry a box of three 8mm tapes instead of a flask of brandy. (When your disk fills up, you consider that an emergency.) These tapes each contain 7 gigabytes. The dog can travel to your side, wherever you may be, at 18 km/hour. For what range of distances does Bernie have a higher data rate than a transmission line whose data rate (excluding overhead) is 150 Mbps?
 
@@ -212,3 +214,38 @@ Sol.
 
 好处：统一的标准使得兼容性更好，成本降低。
 坏处：不好的标准可能很难被淘汰，比如OSI比TCP／IP先进但没有被采用。
+
+# 物理层
+
+## 笔记
+
+### 知识点
+
+- 通信介质：双绞线，同轴电缆，电力线（电力线上可以传数据），光纤
+
+- 调制与多路复用：基带传输，同带传输，时分复用，频分复用，码分复用（数学上分离不同的码）
+
+- 有关下行和上行：下行是下载，上行是上传，一般下行带宽会比较大
+
+### 公共电话交换网络
+
+- 电话网络：本地回路接到端局 - 中继线接到长途局 - 长途局之间用超高带宽中继线连接
+
+- 奈奎斯特定律告诉我们带宽有多大，采样频率最高只能是它的两倍，换句话说，3000hz带宽，最多传输6000个符号，至于一个符号代表
+多少信息量就和编码方式有关了，传递信息的上限是和信噪比有关的。
+
+- 用电话网络的时候最大的限制在本地回路上
+
+- 计算机的带宽和通信的带宽意义是不同的，一个是bps，还有一个是hz
+
+### 移动电话系统
+
+- 蜂窝状的所以是蜂窝移动网络 cell phone就是这么来的
+
+- 基站传输，所以和有线电话不是一个系统
+
+### 有线电视
+
+- 电话公司和有线电视公司都提供internet接入服务，看你选择哪一个了。怪不得宽带上网一般是电话公司提供的服务。
+
+- 用户接入Internet是先接到ISP上去的。
