@@ -9,6 +9,13 @@ Sub Title   : Andrew S.Tanenbaum
 
 # 引言
 
+## 笔记
+
+- 应用层：HTTP, SMTP, RTP, DNS
+- 传输层：TCP, UDP
+- 互联网层：IP, ICMP
+- 链路层：DSL, SONET, 802.11, Ethernet
+
 ## 课后习题
 
 > (1) Imagine that you have trained your St. Bernard, Bernie, to carry a box of three 8mm tapes instead of a flask of brandy. (When your disk fills up, you consider that an emergency.) These tapes each contain 7 gigabytes. The dog can travel to your side, wherever you may be, at 18 km/hour. For what range of distances does Bernie have a higher data rate than a transmission line whose data rate (excluding overhead) is 150 Mbps?
@@ -366,7 +373,7 @@ MAC地址：前三个字节代表网络设备制造商，后三个是该制造�
 
 ### 路由算法
 
-- 路由器两个功能：路由和转发。转发：拿到数据包，处理，根据路由表发到相应路由器。路由:生成路由表。
+- 路由器两个功能：路由和转发。转发：拿到数据包，处理，根据路由表发到相应路由器。路由:生成路由表。路由器一般有缓冲区，可以接受数据包后放在缓存区慢慢处理。
 
 - 路由表：记录了哪个ip段应该发给哪个路由器（无连接），记录了带有某个标识的数据应该发到哪个路由器（有连接）
 
@@ -389,4 +396,16 @@ MAC地址：前三个字节代表网络设备制造商，后三个是该制造�
 ### 拥塞控制算法
 
 - 当负载大于路由器和线路的能力的时候，就要有拥塞控制算法，可以流量感知，把流量拆分到多个路径。也可以准入控制，控制流量。路由器还可以往回传反馈给主机，这叫流量调节。最后可以负载脱落，就是丢弃数据包。
+
+### 服务质量
+
+- 不同的应用有不同的需求，典型的如视频电话：对延迟抖动要求极高，对丢失的要求很低
+
+- Asynchronous Transfer Mode (ATM 网络) 支持恒定比特率，可变实时非实时，可变比特率等。
+
+- 流量整形：不管接收速率，一直以同样的速率输出流量。两种算法，漏桶算法和令牌桶算法。
+
+- 包调度算法：在同一个流的数据包之间以及在竞争流之间分配路由器资源的算法。就是数据包到了以后先处理谁的问题。
+
+- QoS routing: 在路由层面满足用户的Qos(Quality of Service)需求。
 
