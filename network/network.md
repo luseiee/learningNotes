@@ -518,3 +518,125 @@ Internet中的进程通信是这样的。传输层获得数据流，分段作为
 
 - 之后讲了一些细节，没有仔细看
 
+## 课后习题
+
+> (1) Give two example computer applications for which connection-oriented service is appropriate. Now give two examples for which connectionless service is best.
+
+Sol.
+
+面向连接服务：SSH，文件传输
+
+无连接服务：视频通话，游戏在线对战，需要快速应答的服务一般需要无连接服务。
+
+> (2) Are there any circumstances when connection-oriented service will (or at least should) deliver packets out of order? Explain.
+
+Sol. 
+
+接收端将无法正确接收数据，比如视频传输，顺序一错视频就乱了。
+
+Wrong!
+
+Circumstance是情况的意思，在terminal中ctrl-c应该被最先传送，而不是排在队尾。
+
+> (3) Datagram subnets route each packet as a separate unit, independent of all others. Virtual-circuit subnets do not have to do this, since each data packet follows a predetermined route. Does this observation mean that virtual-circuit subnets do not need the capability to route isolated packets from an arbitrary source to an arbitrary destination? Explain your answer.
+
+Sol.
+
+并不是如此，虚电路网络对不同方向的数据包需要建立不同的虚电路，因此也要具备这样的能力。
+
+补充：在建立虚电路的时候需要把setup package从任意端传输到任意接收方。
+
+> (4) Give three examples of protocol parameters that might be negotiated when a connection is set up.
+
+Sol.
+
+IP协议，协商IP包的最大跳数，是否可以分段，还有出错时的处理方式。
+
+> (5) Consider the following design problem concerning implementation of virtual-circuit service. If virtual circuits are used internal to the subnet, each data packet must have a 3-byte header and each router must tie up 8 bytes of storage for circuit identification. If datagrams are used internally, 15-byte headers are needed but no router table space is required. Transmission capacity costs 1 cent per 106 bytes, per hop. Very fast router memory can be purchased for 1 cent per byte and is depreciated over two years, assuming a 40-hour business week. The statistically average session runs for 1000 sec, in which time 200 packets are transmitted. The mean packet requires four hops. Which implementation is cheaper, and by how much?
+
+Sol.
+
+Virtual Circuits: `200 * 3 * 4 / 10 ^ 6 + 1000 * 8 * 5 / 2 / 52 / 40 / 3600`
+Datagrams: `15 * 4 * 200 / 10 ^ 6`
+
+> (6) Assuming that all routers and hosts are working properly and that all software in both is free of all errors, is there any chance, however small, that a packet will be delivered to the wrong destination?
+
+Sol.
+
+有可能，当有ip冲突或者传输过程中发生ip地址变更的情况。
+
+Wrong!
+
+答案是错误可能出在低层上，比如物理层
+
+> (7) Give a simple heuristic for finding two paths through a network from a given source to a given destination that can survive the loss of any communication line (assuming two such paths exist). The routers are considered reliable enough, so it is not necessary to worry about the possibility of router crashes.
+
+Sol.
+
+先找出一条最短路径，再把这条路径删除，找出另一条最短路径。只要两条路径没有公共部分即可。
+
+> (8) Consider the subnet of Fig.5-12(a). Distance vector routing is used, and the following vectors have just come in to router C: from B: (5, 0, 8, 12, 6, 2); from D: (16, 12, 6, 0, 9, 10); and from E: (7, 6, 3, 9, 0, 4). The measured delays to B, D, and E, are 6, 3, and 5, respectively. What is C's new routing table? Give both the outgoing line to use and the expected delay.
+
+Sol.
+
+这题是距离矢量算法。
+
+```
+  C 到 A 11 经过 B
+  A 11 B
+  B 6  B
+  C 0  -
+  D 3  D
+  E 5  E
+  F 8  B
+```
+
+> (9) If delays are recorded as 8-bit numbers in a 50-router network, and delay vectors are exchanged twice a second, how much bandwidth per (full-duplex) line is chewed up by the distributed routing algorithm? Assume that each router has three lines to other routers.
+
+Sol.
+
+每个路由器需要维护一张400bit的表，因此传输0.5s一次会浪费单个方向800bps的带宽
+
+> (10) In Fig. 5-14 the Boolean OR of the two sets of ACF bits are 111 in every row. Is this just an accident here, or does it hold for all subnets under all circumstances?
+
+Sol.
+
+这题讲的是链路状态路由算法。
+
+这个永远是对的，ACK标志标志表示来自哪里，它可能由两条路线过来，而发送标志表示要发送往哪里。
+
+> (11) For hierarchical routing with 4800 routers, what region and cluster sizes should be chosen to minimize the size of the routing table for a three-layer hierarchy? A good starting place is the hypothesis that a solution with k clusters of k regions of k routers is close to optimal, which means that k is about the cube root of 4800 (around 16). Use trial and error to check out combinations where all three parameters are in the general vicinity of 16.
+
+Sol.
+
+这题讲的是层次路由。
+
+层次可以分许多层，和网络中路由器的数量规模有关。
+
+16 15 20
+
+> (12) In the text it was stated that when a mobile host is not at home, packets sent to its home LAN are intercepted by its home agent on that LAN. For an IP network on an 802.3 LAN, how does the home agent accomplish this interception?
+
+Sol.
+
+家乡代理拥有主机的IP地址即可截获，有什么问题吗？
+
+Conceivably it might go into promiscuous mode, reading all frames dropped onto the LAN, but this is very inefficient. Instead, what is normally done is that the home agent tricks the router into thinking it is the mobile host by re- sponding to ARP requests. When the router gets an IP packet destined for the mobile host, it broadcasts an ARP query asking for the 802.3 MAC-level ad- dress of the machine with that IP address. When the mobile host is not around, the home agent responds to the ARP, so the router associates the mobile user’s IP address with the home agent’s 802.3 MAC-level address.
+
+上面是标准答案，实际上就是在ARP广播时相应家乡代理自己的MAC地址，实际上就是拥有了主机的IP地址嘛。
+
+> (13) Looking at the subnet of Fig. 5-6, how many packets are generated by a broadcast from B, using a. (a)reverse path forwarding? b. (b)the sink tree?
+
+Sol.
+
+reverse path forwarding，路由器接收到广播包时，检查是否是自己给广播源发包的路径，是的话说明是从最优路径发过来的，这时给所有其他节点发包，最后算下来发了21次
+
+sink tree是汇集树，是由B到所有节点最短路径的集合，这样发的话发14个包，每个树枝必会到一个节点，而且不会重复。
+
+> (14)  Suppose that node B in Fig. 5-20 has just rebooted and has no routing information in
+its tables. It suddenly needs a route to H. It sends out broadcasts with TTL set to 1, 2,
+3, and so on. How many rounds does it take to find a route?
+
+Sol.
+
+这题考查自组织网络路由，就是路由器本身也在移动的情况。TTL分别设置为1，2，3是为了使搜索半径不断增大。由于B和H距离为3，因此TTL设置为3的时候可以发现，因此3轮可以发现路由。
