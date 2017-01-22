@@ -791,3 +791,15 @@ Sol.
 
 当然需要，无线网是数据链路层和物理层的事情，和IP层无关，还是要利用家乡代理。
 
+> (41) The Protocol field used in the IPv4 header is not present in the fixed IPv6 header. Why not?
+
+Sol.
+
+因为在IPv6头中有一个字段叫下一个头，会说明该字段要交给哪一种上层协议处理。
+
+> (42) When the IPv6 protocol is introduced, does the ARP protocol have to be changed? If so, are the changes conceptual or technical?
+
+Sol.
+
+不需要做任何改变，只是IP地址需要更长的空间而已。
+
