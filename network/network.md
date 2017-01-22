@@ -640,3 +640,154 @@ its tables. It suddenly needs a route to H. It sends out broadcasts with TTL set
 Sol.
 
 这题考查自组织网络路由，就是路由器本身也在移动的情况。TTL分别设置为1，2，3是为了使搜索半径不断增大。由于B和H距离为3，因此TTL设置为3的时候可以发现，因此3轮可以发现路由。
+
+> (15) As a possible congestion control mechanism in a subnet using virtual circuits internally,
+a router could refrain from acknowledging a received packet until (1) it knows its last transmission along the virtual circuit was received successfully and (2) it has a free buffer. For simplicity, assume that the routers use a stop-and-wait protocol and that each virtual circuit has one buffer dedicated to it for each direction of traffic. If it takes T sec to transmit a packet (data or acknowledgement) and there are n routers on the path, what is the rate at which packets are delivered to the destination host? Assume that transmission errors are rare and that the host-router connection is infinitely fast.
+
+Sol.
+
+讲的是拥塞控制，这个方法不好，需要前一个包完全确认了才能传输下一个包。
+
+The protocol is terrible. Let time be slotted in units of T sec. In slot 1 the source router sends the first packet. At the start of slot 2, the second router has received the packet but cannot acknowledge it yet. At the start of slot 3, the third router has received the packet, but it cannot acknowledge it either, so all the routers behind it are still hanging. The first acknowledgement can only be sent when the destination host takes the packet from the destination router. Now the acknowledgement begins propagating back. It takes two full transits of the network, 2(n − 1)T sec, before the source router can send the second packet. Thus, the throughput is one packet every 2(n − 1)T sec.
+
+> (17) Describe two major differences between the ECN and the RED method.
+
+Sol.
+
+这两种是拥塞控制算法。
+
+ECN (Explicit Congestion Notification, 显式拥塞通知)，路由器在它转发的数据包上打上标记，发出信号，接收方注意到拥塞时，发送应答包的同时告知发送方，让发送方降低传送速率。
+
+RED (Random Early Detection, 随机早期检测), 路由器维护一个运行队列长度的平均值，当超过阈值的时候就开始随机丢弃数据包，快速发送方发现丢包就开始降低发送速率。
+
+主要区别是一个显式通知，一个隐式通知，一个是缓存区开始不够了才通知，另一个是提前预知。
+
+> (18) An ATM network uses a token bucket scheme for traffic shaping. A new token is put into the bucket every 5 μsec. Each token is good for one cell, which contains 48 bytes of data. What is the maximum sustainable data rate?
+
+Sol.
+
+With a token every 5 μsec, 200,000 cells/sec can be sent. Each packet holds 48 data bytes or 384 bits. The net data rate is then 76.8 Mbps.
+
+> (19) A computer on a 6-Mbps network is regulated by a token bucket. The token bucket is filled at a rate of 1 Mbps. It is initially filled to capacity with 8 megabits. How long can the computer transmit at the full 6 Mbps?
+
+Sol.
+
+8 / (6 - 1) = 1.6s
+
+> (21) The CPU in a router can process 2 million packets/sec. The load offered to it is 1.5 million packets/sec. If a route from source to destination contains 10 routers, how much time is spent being queued and serviced by the CPUs?
+
+Sol.
+
+这题用到排队论，服务速率为2，到达速率为1.5，那么服务时间为 1／2million / (1 - 1.5 / 2) = 2us。 10个routers就是20us.
+
+> (22) Consider the user of differentiated services with expedited forwarding. Is there a guarantee that expedited packets experience a shorter delay than regular packets? Why or why not?
+
+Sol.
+
+不保证，过多包被标记为加速的，那么可能反而变慢了。
+
+> (23) Suppose that host A is connected to a router R 1, R 1 is connected to another router, R 2, and R 2 is connected to host B. Suppose that a TCP message that contains 900 bytes of data and 20 bytes of TCP header is passed to the IP code at host A for delivery to B. Show the Total length, Identification, DF, MF, and Fragment offset fields of the IP header in each packet transmitted over the three links. Assume that link A-R1 can support a maximum frame size of 1024 bytes including a 14-byte frame header, link R1-R2 can support a maximum frame size of 512 bytes, including an 8-byte frame header, and link R2-B can support a maximum frame size of 512 bytes including a 12- byte frame header.
+
+Sol.
+
+```
+Link A-R1 :
+Length: 900 + 20 (TCP) + 20 (IP) = 940 Bytes, ID:X , DF:0 , MF:0 , Fragment offset:0
+Link R1-R2:
+(1) Length = 500; ID = x; DF = 0; MF = 1; Offset = 0 (2) Length = 460; ID = x; DF = 0; MF = 0; Offset = 60
+Link R2-B:
+(1) Length = 500; ID = x; DF = 0; MF = 1; Offset = 0 (2) Length = 460; ID = x; DF = 0; MF = 0; Offset = 60
+不用去考虑数据链路层的成帧部分，IP协议不关心。
+```
+
+> (24) A router is blasting out IP packets whose total length (data plus header) is 1024 bytes. Assuming that packets live for 10 sec, what is the maximum line speed the router can operate at without danger of cycling through the IP datagram ID number space?
+
+Sol.
+
+IP包的ID字段拥有16位，因此65536个不同编号
+
+65536 ＊ 1024 * 8 / 10 = 54 Gbps
+
+> (25)  An IP datagram using the Strict source routing option has to be fragmented. Do you think the option is copied into each fragment, or is it sufficient to just put it in the first fragment? Explain your answer.
+
+Sol.
+
+Strict Source Routing 严格源路由，是IPv4头的可选项，表明该包必须经过指定路由。
+
+必须要在每个fragment都要包括。
+
+> (26) Suppose that instead of using 16 bits for the network part of a class B address originally, 20 bits had been used. How many class B networks would there have been?
+
+Sol.
+
+B类地址，前缀10定死，因此18bits可以用，所以有2^18个B类网络。
+
+> (28) A network on the Internet has a subnet mask of 255.255.240.0. What is the maximum number of hosts it can handle?
+
+Sol.
+
+4096
+
+> (29) 为什么以太网地址不能特定于一个网络，而IP地址却可以？
+
+Sol.
+
+Each Ethernet adapter sold in stores comes hardwired with an Ethernet (MAC) address in it. When burning the address into the card, the manufac- turer has no idea where in the world the card will be used, making the address useless for routing. In contrast, IP addresses are either assigned either stati- cally or dynamically by an ISP or company, which knows exactly how to get to the host getting the IP address.
+
+> (30) A large number of consecutive IP address are available starting at 198.16.0.0. Suppose that four organizations, A, B, C, and D, request 4000, 2000, 4000, and 8000 addresses, respectively, and in that order. For each of these, give the first IP address assigned, the last IP address assigned, and the mask in the w.x.y.z/s notation.
+
+Sol. 
+```
+A: 198.16.0.0 – 198.16.15.255 written as 198.16.0.0/20 
+B: 198.16.16.0 – 198.23.15.255 written as 198.16.16.0/21 
+C: 198.16.32.0 – 198.47.15.255 written as 198.16.32.0/20 
+D: 198.16.64.0 – 198.95.15.255 written as 198.16.64.0/19
+```
+
+> (31) A router has just received the following new IP addresses: 57.6.96.0/21, 57.6.104.0/21, 57.6.112.0/21, and 57.6.120.0/21. If all of them use the same outgoing line, can they be aggregated? If so, to what? If not, why not?
+
+Sol.
+
+可以聚合成57.6.96.0/19, 这个时候会有57.6.120.0/21没有被聚合，但是有最大匹配原则所以不要紧。
+
+> (32)  The set of IP addresses from 29.18.0.0 to 19.18.128.255 has been aggregated to 29.18.0.0/17. However, there is a gap of 1024 unassigned addresses from 29.18.60.0 to 29.18.63.255 that are now suddenly assigned to a host using a different outgoing
+line. Is it now necessary to split up the aggregate address into its constituent blocks, add the new block to the table, and then see if any reaggregation is possible? If not, what can be done instead?
+
+Sol.
+
+不需要，因为有最长匹配，所以单独聚合即可。
+
+> (34) Many companies have a policy of having two (or more) routers connecting the company to the Internet to provide some redundancy in case one of them goes down. Is this policy still possible with NAT? Explain your answer.
+
+Sol.
+
+After NAT is installed, it is crucial that all the packets pertaining to a single connection pass in and out of the company via the same router, since that is where the mapping is kept. If each router has its own IP address and all traffic belonging to a given connection can be sent to the same router, the mapping can be done correctly and multihoming with NAT can be made to work.
+
+所以是可以的，只要网络中的每个主机发给特定router即可。
+
+> (36) Describe a way to reassemble IP fragments at the destination.
+
+Sol.
+
+In the general case, the problem is nontrivial. Fragments may arrive out of order and some may be missing. On a retransmission, the datagram may be fragmented in different-sized chunks. Furthermore, the total size is not known until the last fragment arrives. Probably the only way to handle reassembly is to buffer all the pieces until the last fragment arrives and the size is known. Then build a buffer of the right size, and put the fragments into the buffer, maintaining a bit map with 1 bit per 8 bytes to keep track of which bytes are present in the buffer. When all the bits in the bit map are 1, the datagram is complete.
+
+所以就是等尾巴来，就可以确定总长度，然后等所有分段都来就可以重组了。
+
+> (37) Most IP datagram reassembly algorithms have a timer to avoid having a lost fragment tie up reassembly buffers forever. Suppose that a datagram is fragmented into four fragments. The first three fragments arrive, but the last one is delayed. Eventually, the timer goes off and the three fragments in the receiver's memory are discarded. A little later, the last fragment stumbles in. What should be done with it?
+
+Sol.
+
+前三段已经被discard了，那么第四段再来会被当成新的，过一段时间一样被扔。
+
+> (38)  In both IP and ATM, the checksum covers only the header and not the data. Why do you suppose this design was chosen?
+
+Sol.
+
+其他部分的checksum可以交给上层协议，而且开销太大，此外头的错误非常严重。
+
+> (39)  A person who lives in Boston travels to Minneapolis, taking her portable computer with her. To her surprise, the LAN at her destination in Minneapolis is a wireless IP LAN, so she does not have to plug in. Is it still necessary to go through the entire business with home agents and foreign agents to make e-mail and other traffic arrive correctly?
+
+Sol.
+
+当然需要，无线网是数据链路层和物理层的事情，和IP层无关，还是要利用家乡代理。
+
