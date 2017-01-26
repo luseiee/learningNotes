@@ -956,3 +956,41 @@ Sol.
 ## 延迟容忍网络DTN
 
 - 在偶尔连接的网络中，可以把数据存储在某些节点，有链路时在工作。感觉没多大记的必要。和TCP,IP协议不一样。
+
+## 课后习题
+
+> (1) In our example transport primitives of Fig.6-2, LISTEN is a blocking call. Is this strictly necessary? If not, explain how a nonblocking primitive could be used. What advantage would this have over the scheme described in the text?
+
+Sol.
+
+The LISTEN call could indicate a willingness to establish new connections but not block. When an attempt to connect was made, the caller could be given a signal. It would then execute, say, OK or REJECT to accept or reject the con- nection. In our original scheme, this flexibility is lacking.
+
+> (2) 像bittorrent这种点对点应用如何区分哪个是connect哪个listen呢？
+
+Sol.
+
+可以竞争，也可以随机，也可以由上层协议控制。
+
+> (3) 假设网络层是百分百正确的那么三次握手协议会有什么样的变化？
+
+Sol.
+
+第三次握手就没有必要了，主机2收到主机1的请求时，直接就确立连接，返回给1确认信息后，1也确立连接。
+
+> (7) Suppose that the clock-driven scheme for generating initial sequence numbers isused with a 15-bit wide clock counter. The clock ticks once every 100 msec, and the maximum packet lifetime is 60 sec. How often need resynchronization take place
+a. (a)in the worst case?
+b. (b)when the data consumes 240 sequence numbers/min?
+
+Sol.
+
+首先，现在的规定是这样的，通信的时候初始段的序号等于始终序号，因此在x秒的时候同步的信号序号为x，注意，建立连接之后，序号就和时间无关了！！！！
+
+第二，在时间x时，不允许发送x+T(T是lifetime)序号的段，这是为什么呢？因为你这个段会生存T秒，而在随后的T秒内如果要建立一个连接，可能会和你现在发的这个段序号一样的懂吗？
+
+(a) 题目是这样的，假设在70秒的时候，你建立了一个连接，这个时候你发出去的信号序号为70。注意，之后你要发送的序号是71，然后你一直忍着不发（这就是最坏的情况），然后时间绕了一圈回来了，时间变成了11秒，此时你再想发71，对不起，规则不允许，因为在11秒的时候，不允许发71。这就是最坏情况了，所以必须重新同步一次。答案是3276.8-60=3216.8
+
+(b) 这个时候变成追及问题，最后计算出来结果是5361.3
+
+总结，你发送速率与时钟速率越接近，需要同步的间隔就越长。但是如果一上来超过时钟速率就直接GG。
+
+因为这种方法不好所以后来创造了三次握手，两边的初始序列号都是随机值，就不需要那么麻烦的时钟什么的啦。只要双方确认了，后面都好办。
