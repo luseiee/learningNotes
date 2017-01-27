@@ -994,3 +994,70 @@ Sol.
 总结，你发送速率与时钟速率越接近，需要同步的间隔就越长。但是如果一上来超过时钟速率就直接GG。
 
 因为这种方法不好所以后来创造了三次握手，两边的初始序列号都是随机值，就不需要那么麻烦的时钟什么的啦。只要双方确认了，后面都好办。
+
+> (9) Imagine that a two-way handshake rather than a three-way handshake were used to
+set up connections. In other words, the third message was not required. Are deadlocks
+now possible? Give an example or show that none exist.
+
+Sol.
+
+有可能出问题，主机2的确认被延迟了，那么可能会建立起一个重复的连接。
+
+> (11) Consider the problem of recovering from host crashes (i.e.,Fig.6-18). If the interval
+between writing and sending an acknowledgement, or vice versa, can be made relatively small, what are the two best sender-receiver strategies for minimizing the chance of a protocol failure?
+
+Sol.
+
+If the AW or WA time is small, the events AC(W) and WC(A) are unlikely events. The sender should retransmit in state S1; the receiver’s order does not matter.
+
+> (13) Discuss the advantages and disadvantages of credits versus sliding window protocols.
+
+Sol.
+
+滑动窗口协议用于流量控制。
+
+The sliding window is simpler, having only one set of parameters (the win- dow edges) to manage. Furthermore, the problem of a window being increased and then decreased, with the segments arriving in the wrong order, does not occur. However, the credit scheme is more flexible, allowing a dynamic management of the buffering, separate from the acknowledgements.
+
+> (14) 拥塞控制的公平性方面的策略，加法递增乘法递减(AIMD).
+
+> (15) Why does UDP exist? Would it not have been enough to just let user processes send
+raw IP packets?
+
+Sol.
+
+无法确认端口。
+
+> (17)  A client sends a 128-byte request to a server located 100 km away over a 1-gigabit optical fiber. What is the efficiency of the line during the remote procedure call?
+
+Sol.
+
+发送包需要`128*8/1G＝1.024us`, 在路上的时间100km/200000 = 50us, 然后一来一回100us，因此利用率约为1%。
+所以说这个时候的制约不是带宽而是距离。
+
+> (19) Both UDP and TCP use port numbers to identify the destination entity when delivering a message. Give two reasons for why these protocols invented a new abstract ID (port numbers), instead of using process IDs, which already existed when these protocols were designed.
+
+Sol. 
+
+进程id动态变化，不易管理，端口号可以被进程绑定，而且一些知名服务需要用固定端口号。
+
+Here are three reasons. First, process IDs are OS-specific. Using process IDs would have made these protocols OS-dependent. Second, a single process may establish multiple channels of communications. A single process ID (per process) as the destination identifier cannot be used to distinguish between these channels. Third, having processes listen on well-known ports is easy, but well-known process IDs are impossible.
+
+> (20) 何时选用基于UDP的RPC，合适使用基于TCP的RPC。
+
+Sol.
+
+RPC是远程过程调用，可以建立客户端－服务器应用。如果请求不是幂等的(幂等是如同计数器加一这种命令，执行次数不同会产生不同结果)，那就可以考虑使用UDP。同时，如果传递的数据包并不大，可以考虑使用UDP。
+
+> (22) 最小TCP MTU的总长度是多少？包括TCP和IP的开销，但是不包括数据链路层的开销。
+
+Sol.
+
+MTU是最大传输单元，最小的TCP MTU可以设置，如果一台主机不设置的话默认是536+20=556字节的TCP段。Internet要求每台主机至少能够处理556字节的段。
+
+> (23) RTP is used to transmit CD-quality audio, which makes a pair of 16-bit samples 44,100 times/sec, one sample for each of the stereo channels. How many packets per second must RTP transmit?
+
+Sol.
+
+Each sample occupies 4 bytes. This gives a total of 256 samples per packet. There are 44,100 samples/sec, so with 256 samples/packet, it takes 44100/256 or 172 packets to transmit one second’s worth of music.
+
+按照标准答案的理解，RTP的一个packet只能传输1024字节，不清楚这个规定是在哪里。
