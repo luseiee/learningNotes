@@ -1061,3 +1061,31 @@ Sol.
 Each sample occupies 4 bytes. This gives a total of 256 samples per packet. There are 44,100 samples/sec, so with 256 samples/packet, it takes 44100/256 or 172 packets to transmit one second’s worth of music.
 
 按照标准答案的理解，RTP的一个packet只能传输1024字节，不清楚这个规定是在哪里。
+
+> (25) Would it be possible to place the RTP code in the operating system kernel, along with the UDP code? Explain your answer.
+
+Sol.
+
+应该要分开，RTP是基于UDP的协议，其他应用程序也要调用UDP，因此最好可以把两段代码分开。
+
+错了！
+
+Sure. The caller would have to provide all the needed information, but there is no reason RTP could not be in the kernel, just as UDP is.
+
+> (26) 主机1的端口p和主机2的端口q之间可能存在多个TCP连接吗？
+
+Sol.
+
+不可能，一对端口之间只能有一个TCP连接。一个进程可以有多个TCP连接。
+
+> (27) ACK标志位有什么用？
+
+Sol.
+
+ACK标志位用来表示ACK字段是否有意义。其实在连接已经建立起来之后ACK标志位已经没有意义了，因为ACK是必须的。而在连接建立的过程中，这是非常重要的。
+
+> (28) 为什么TCP段的有效载荷是65495字节？
+
+Sol.
+
+因为TCP长度为16位标示，所以最多65535字节，然后去掉TCP头20字节，去掉IP头20字节。剩下65495字节。
