@@ -908,7 +908,7 @@ Sol.
 - RST:报错
 - SYN:建立连接用
 - FIN:释放连接
-- 窗口大小表示对方可以发送多少字节过来
+- 窗口大小表示对方可以发送多少字节过来,注意窗口大小虽然16位，但是尺度可以双方协商！！！
 - 选项里面可以放时间戳等等
 
 ### TCP连接建立，三次握手
@@ -1118,6 +1118,51 @@ One window can be sent every 20 msec. This gives 50 windows/sec, for a maximum d
 
 Sol.
 
-TCP中每个Byte会占用一个序号，而TCP的sequence number是32位的，所以可以每120s发送2^32Bytes信息，然而1500B信息需要1500+20+20+26的段帧来发送因此需要的带宽为`2^32*8*1566/1500/120=299Mbps`。
+TCP中每个Byte会占用一个序号，而TCP的sequence number是32位的，所以可以每120s发送2^32Bytes信息，然而1500B信息需要1500+20+20+26(以太网)的段帧来发送因此需要的带宽为`2 ^ 32 * 8 * 1566 / 1500 / 120 = 299Mbps`。
 
 The goal is to send 2^32 bytes in 120 sec or 35,791,394 payload bytes/sec. This is 23,860 1500-byte frames/sec. The TCP overhead is 20 bytes. The IP overhead is 20 bytes. The Ethernet overhead is 26 bytes. This means that for 1500 bytes of payload, 1566 bytes must be sent. If we are to send 23,860 frames of 1566 bytes every second, we need a line of 299 Mbps. With any- thing faster than this we run the risk of two different TCP segments having the same sequence number at the same time.
+
+> (35) 为什么那么多人在为了ipv4的局限性做努力，而对TCP的局限性却没有人这样做。
+
+Sol.
+
+根本原因是IP协议运行在所有路由器上。
+
+IP is a network level protocol while TCP is an end-to-end transport level protocol. Any change in the protocol specification of IP must be incorporated on all routers in the Internet. On the other hand, TCP can works fine as long as the two end points are running compatible versions. Thus, it is possible to have many different versions of TCP running at the same time on different hosts, but not this is not the case with IP.
+
+> (36)  In a network that has a maximum TPDU size of 128 bytes, a maximum TPDU lifetime of 30 sec, and an 8-bit sequence number, what is the maximum data rate per connection?
+
+Sol.
+
+TPDU:Transport Protocol Data Unit 协议数据单元。
+
+`2 ^ 8 * 128 * 8 / 30 = 8.7kbps`
+
+> (37) Suppose that you are measuring the time to receive a TPDU. When an interrupt occurs,
+you read out the system clock in milliseconds. When the TPDU is fully processed, you read out the clock again. You measure 0 msec 270,000 times and 1 msec 730,000 times. How long does it take to receive a TPDU?
+
+Sol.
+
+27次是0ms，73次是1ms，那么平均是730us。
+
+> (38) A CPU executes instructions at the rate of 1000 MIPS. Data can be copied 64 bits at a time, with each word copied costing 10 instructions. If an coming packet has to be copied four times, can this system handle a 1-Gbps line? For simplicity, assume that all instructions, even those instructions that read or write memory, run at the full 1000- MIPS rate.
+
+Sol.
+
+`1000M * 64 /10 / 4 = 1.6 Gbps > 1Gbps 可以`.
+
+> (41) For a 1-Gbps network operating over 4000 km, the delay is the limiting factor, not the bandwidth. Consider a MAN with the average source and destination 20 km apart. At what data rate does the round-trip delay due to the speed of light equal the transmission delay for a 1-KB packet?
+
+Sol.
+
+`20 * 2 / 200000 = 200us延迟
+发送1KB要200us的话，带宽至少要1024 * 8 * 1 / 200u = 40 Mbps`
+
+> (43) What is the bandwidth-delay product for a 50-Mbps channel on a geostationary satellite? If the packets are all 1500 bytes (including overhead), how big should the window be in packets?
+
+Sol.
+
+The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-product delay is 27 megabits or 3,375,000 bytes. With packets of 1500 bytes, it takes 2250 packets to fill the pipe, so the window should be at least 2250 packets.
+
+
+
