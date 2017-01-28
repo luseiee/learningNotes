@@ -1089,3 +1089,35 @@ ACK标志位用来表示ACK字段是否有意义。其实在连接已经建立�
 Sol.
 
 因为TCP长度为16位标示，所以最多65535字节，然后去掉TCP头20字节，去掉IP头20字节。剩下65495字节。
+
+> (30) Consider the effect of using slow start on a line with a 10-msec round-trip time and no congestion. The receive window is 24 KB and the maximum segment size is 2 KB. How
+long does it take before the first full window can be sent?
+
+Sol.
+
+慢速启动是TCP协议中拥塞控制的一个算法，略看。The first bursts contain 2K, 4K, 8K, and 16K bytes, respectively. The next one is 24 KB and occurs after 40 msec.
+
+> (31) Suppose that the TCP congestion window is set to 18 KB and a timeout occurs. How big
+will the window be if the next four transmission bursts are all successful? Assume that
+the maximum segment size is 1 KB.
+
+Sol.
+
+也是拥塞控制的算法，TCP维护一个拥塞窗口，略看。The next transmission will be 1 maximum segment size. Then 2, 4, and 8. So after four successes, it will be 8 KB.
+
+> (33) A TCP machine is sending full windows of 65,535 bytes over a 1-Gbps channel that has
+a 10-msec one-way delay. What is the maximum throughput achievable? What is the line efficiency?
+
+Sol.
+
+One window can be sent every 20 msec. This gives 50 windows/sec, for a maximum data rate of about 3.3 million bytes/sec. The line efficiency is then 26.4 Mbps/1000 Mbps or 2.6 percent.
+
+因此有延迟的网络传输效率和窗口大小，延迟有很大关系。
+
+> (34) What is the fastest line speed at which a host can blast out 1500-byte TCP payloads with a 120-sec maximum packet lifetime without having the sequence numbers wrap around? Take TCP, IP, and Ethernet overhead into consideration. Assume that Ethernet frames may be sent continuously.
+
+Sol.
+
+TCP中每个Byte会占用一个序号，而TCP的sequence number是32位的，所以可以每120s发送2^32Bytes信息，然而1500B信息需要1500+20+20+26的段帧来发送因此需要的带宽为`2^32*8*1566/1500/120=299Mbps`。
+
+The goal is to send 2^32 bytes in 120 sec or 35,791,394 payload bytes/sec. This is 23,860 1500-byte frames/sec. The TCP overhead is 20 bytes. The IP overhead is 20 bytes. The Ethernet overhead is 26 bytes. This means that for 1500 bytes of payload, 1566 bytes must be sent. If we are to send 23,860 frames of 1566 bytes every second, we need a line of 299 Mbps. With any- thing faster than this we run the risk of two different TCP segments having the same sequence number at the same time.
