@@ -1301,7 +1301,7 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
   rtsp  流式媒体
 ```
 
-- URL,URN,URI: URI包括URL,URN，所以用URI是永远不会错的
+- URL,URN,URI: URI包括URL,URN，所以用URI是永远不会错的。URL必带协议，URN可以不带协议。
 
 #### 其它
 
@@ -1332,5 +1332,21 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 
 - 第三方cookie: 从一个不同于主页网站的其它网站获得cookie，例如上面的广告公司。浏览器可以阻止第三方cookie。
 
+### 静态Web页面
 
+- HTML, HyperText Markup Language
+- CSS, Cascading Style Sheets
 
+### 动态Web页面和Web应用
+
+#### 服务器端动态Web页面生成
+
+- 第一种方式是CGI(Common Gateway Interface)，公共网关接口。CGI提供了一个接口，允许Web服务器与后端程序及脚本通信，并生成HTML页面作为响应。如果没错的话，Python的WSGI是类似于CGI的一个东西。
+
+- CGI它只是一个接口定义：它不负责服务器的实现，也不负责网页应用的实现，它只是一个两边接口方式的约定。所以，它并不是另一个 WEB 应用框架。通常意义上的 WEB 应用框架，也只相当于 WSGI 网页应用端的一种实现。
+
+- 第二种方式是在HTML页面中嵌入少量的脚本，然后让服务器来执行这些脚本以便生成最终发送给客户的页面。PHP就是其中一种。通常用扩展名php来标示包含PHP的Web页面，而不是用html。注意这里的关键是脚本运行在服务器端。
+
+- 除此之外还有JSP(JavaServer Pages),Java服务器页面，页面中的动态部分用Java编写。
+
+- 还有ASP.NET(Active Server Page)是Microsoft版本的PHP和JSP。它使用Microsoft专用的.NET网络应用框架来生成动态内容。使用这种技术的页面具有文件扩展名.aspx。
