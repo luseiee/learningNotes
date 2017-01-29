@@ -1164,5 +1164,173 @@ Sol.
 
 The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-product delay is 27 megabits or 3,375,000 bytes. With packets of 1500 bytes, it takes 2250 packets to fill the pipe, so the window should be at least 2250 packets.
 
+# 应用层
+
+## DNS (Domain Name System) 域名系统
+
+### DNS名字空间
+
+- DNS采用层级管理系统。包括com, edu, gov, net, cn, jp等等都是顶级域名。这些域又划分成子域，子域又可以进一步划分。在叶子上的子域包含若干主机。域名是自底向上的，以dot分开。
+
+- 域名不区分大小写
+
+- 创建一个新域，只要活得上级域的许可即可。
+
+### 域名资源记录
+
+- 记录组成了DNS数据库，DNS的基本功能就是将域名映射到资源记录。
+
+- 资源记录的格式如下
+```
+  Domain_name  Time_to_live  Class  Type  Value
+  
+  Domain name: 域名，不必多解释
+  Time to live: 指出该记录的稳定程度，记录可能是从上级域名服务器上缓存下来的，并不一定保证最新。
+  Type: 一般都是IN，指Internet
+  Value: 是指记录的值
+  
+  一些重要的Type:
+  SOA: 授权开始
+  A: 最常用，对应主机的IPV4地址
+  AAAA: IPV4地址
+  MX: 邮件交换
+  NS: 名字服务器
+  CNAME: 规范名，也就是别名
+```
+
+- 一些例子:
+```
+  我的clog:
+  clog.science.		600	IN	CNAME	clog.science.herokudns.com.
+  clog.science.herokudns.com. 300	IN	A	54.225.223.184
+  clog.science.herokudns.com. 300	IN	A	54.221.218.81
+  ...共好多条
+  哇，好多备用服务器，但是直接访问这个IP没有办法到我的网站
+```
+
+- 第二个例子:
+```
+  cs.vu.nl  86400 IN  SOA   star boss (9527,7200,7200,241 920, 86400)
+  cs.vu.nl  86400 IN  MX    1 zephyr
+  cs.vu.nl  86400 IN  MX    2 top
+  cs.vu.nl  86400 IN  NS    star
+  
+  star      86400 IN  A     130.27.56.205
+  zephyr    86400 IN  A     130.37.20.10
+  top       86400 IN  A     130.37.20.11
+  www       86400 IN  CNAME star.cs.vu.nl
+  ftp       86400 IN  CNAME zephyr.cs.vu.nl
+```
+
+### 域名服务器
+
+- 每个区域都有一个或多个域名服务器。当要访问的地址无法在本地域名服务器找到时，会被转发给根域名服务器，然后再层层转发。有迭代查询，和递归查询两种。
+
+- 通过长距离查询到的结果会被缓存下来，下次查询就会快很多。
+
+- DNS采用UDP协议
+
+```
+  dig www.baidu.com
+  dig clog.science
+  dig命令可以看到dns的返回值
+```
+
+## 电子邮件
+
+### 服务概述
+
+- 用户代理 － 邮件传送代理 － SMTP － 邮件传送代理 － 接收端用户代理
+
+- **用户代理**是一个程序，其实就是我们平时用的邮箱
+
+- **邮件传送代理**是我们的邮箱服务提供商，比如126
+
+### 邮件格式
+
+- 在最开始的时候，邮件只能由文本消息组成。现在的解决方案是**MIME**，即Multipurpose Internet Mail Extensions，多用途Internet邮件扩展。它被包含在邮件头中，告诉接受者应该怎么样读取内容。
+
+- MIME也被用于Web中
+- MIME包括
+```
+  text        plain,html,xml,css
+  image       gif,jpeg,tiff
+  audio       basic,mpeg,mp4
+  video       mpeg,mp4,quicktime
+  application pdf,javascript,zip
+  message     http,rfc822
+  等等
+```
+
+### 邮件传送
+
+- 为了确定要联系的正确邮件服务器，必须先咨询DNS
+- 发送方的邮件传输代理与目标邮件服务器IP地址的端口25建立一个TCP连接
+- 基于SMTP(Simple Mail Transfer Protocol)
+- 从最初的邮件传输代理与邮件传输代理一跳完成邮件的传输
+
+### 最后传递
+
+- 邮件到了用户传送代理了，比如126邮箱了，然后再怎么传递给用户代理呢？
+- 现在的用户希望从多个终端可以访问到自己的邮件，这个时候需要两种协议
+- IMAP(Internet Message Access Protocol)或更早的POP3(Post Office Protocol)
+
+## 万维网
+
+### 概述
+
+#### HTTP协议(HyperText Transfer Protocol)
+
+- 抓取网页所用的“请求-响应”协议是一个简单的基于文本协议，它运行在TCP之上。
+
+#### 静态页面与动态页面。
+
+- 静态页面每次显示的是相同的一个文档，如果每次显示的是程序按需产生的内容，或者页面本身包含了一个程序，则称该网页为动态网页。
+
+#### URL
+
+- 访问页面时需要知道页面的资源位置，Web的解决方案是使用URL,统一资源定位符(Uniform Resource Locator)。URL包含三个部分，协议，页面所在机器的DNS名字，以及唯一指向特定页面的路径。
+
+- 浏览器不止可以获得HTTP协议的资源，还有许多其他协议的URL
+```
+  http
+  https
+  ftp
+  file 用于获取本地文件 file:///usr/lxc/xueshu/main.txt
+  mailto  用于发送邮件
+  rtsp  流式媒体
+```
+
+- URL,URN,URI: URI包括URL,URN，所以用URI是永远不会错的
+
+#### 其它
+
+- MIME类型: 当一台服务器返回一个页面时，它同时也返回了一些关于此页面的信息，其中包括页面的MIME类型
+
+- 有两种扩展浏览器的方式：插件(plugin)和辅助应用程序(helper application)。
+
+- 浏览器也能打开本地的文件，不一定非得从web服务器上取回文件。
+
+- 服务器端需要可以同时处理很多请求。一个解决方案时服务器由一个前端模块和k个处理模块组成。k＋1个线程全部处于同一个进程，这样可以同时处理k个请求。
+
+#### Cookie
+
+- Cookie:当用户请求一个web页面时，服务器除了提供请求的页面信息外，还以Cookie的形式提供一些附加信息。
+
+- 一个Cookie可能包含最多5个字断，每个域最多存储20个Cookie。
+```
+  域          路径 内容            过期          安全
+  aportal.com /   CustomerID=lxc 14-10-1017:00 否
+```
+如果不存在过期时间，则为关闭浏览器。安全选项表示只在SSL/TLS时使用。
+
+- Cookie的一种用法：网上购物时，点一件商品就更新一次Cookie，但是我觉得用得更多的应该是数据库。
+
+- Cookie的一种用法：广告公司在其他网站上放广告，然后广告图片是一个唯一名字的图片，每次访问该图片时就把该图片id作为Cookie返回给用户，用户访问另一个页面(也包含这个公司的广告),浏览器就知道用户之前访问过什么。
+
+- 广告公司想要偷偷跟踪用户，可以将上面的广告做成1*1像素的
+
+- 第三方cookie: 从一个不同于主页网站的其它网站获得cookie，例如上面的广告公司。浏览器可以阻止第三方cookie。
+
 
 
