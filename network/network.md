@@ -1350,3 +1350,127 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 - 除此之外还有JSP(JavaServer Pages),Java服务器页面，页面中的动态部分用Java编写。
 
 - 还有ASP.NET(Active Server Page)是Microsoft版本的PHP和JSP。它使用Microsoft专用的.NET网络应用框架来生成动态内容。使用这种技术的页面具有文件扩展名.aspx。
+
+#### 客户端动态Web页面生成
+
+- JavaScript是一种非常高级的语言，它的变异速度很快，每个浏览器对它的支持都不一样。
+
+- PHP和JavaScript看上去很相似，它们都是嵌入在HTML中的代码，但它们的处理方式完全不同。
+
+- PHP是当服务器收到用户请求时，服务器加载PHP文件，并执行内嵌的PHP脚本，由此返回页面给用户。
+
+- 除了JavaScript外，适用于Windows平台的方法是VBScript。还有Applet，使用浏览器的JVM运行。Microsoft还允许Web页面包含ActiveX控件，它被编译成x86机器指令，可以直接在裸机上运行。
+
+#### AJAX - Asynchronous JavaScript and XML
+
+- AJAX它不是一种语言，是一组需要一起协同工作的技术。
+```
+  (1) 用来表现页面信息的HTML和CSS
+  (2) 浏览时改变部分页面的DOM(Document Object Model)
+  (3) 使得程序和服务器交换应用数据的XML(eXtensible Markup Language)
+  (4) 程序发送和检索XML数据的异步方式
+  (5) 将所有功能组合在一起的JavaScript
+```
+
+- 文档对象模型DOM表示结构化成一棵反映HTML元素的树。它的意义在于给程序提供了一种改变部分页面内容的方法，没有必要重写整个页面。
+
+- 可扩展标记语言XML是一个说明结构化内容的语言。
+```
+  <author>
+    <first_name> George </first_name>
+    <last_name> Phil </last_name>
+  </author>
+```
+用户可以自定义标签，它非常适合于浏览器端运行的程序和服务器传输信息，但它没有说明如何显示作为网页的文档。XSLT可以将XML转换成HTML。
+
+- 不用HTML而采用XML来表示数据的另一个优点是数据更容易被程序分析。
+
+- HTML有点马虎，有时候标签不正确关闭也可以显示，而XML则要求十分严格。
+
+- HTML也可以按照XML术语来定义。称为XHTML。HTML5.0是HTML像XHTML的过渡。
+
+- SOAP(Simple Object Access Protocol),简单对象访问协议。是实现基于XML和HTTP协议的一种简单的程序间通信方式。
+
+- 动态Web技术总结
+```
+  客户端:
+  Java虚拟机，VB脚本解释器，HTML/CSS/XML解释器，JavaScript解释器，插件，辅助应用程序
+  服务器端:
+  PHP,JSP,ASP,CGI脚本
+```
+
+### HTTP (HyperText Transfer Protocol)
+
+- HTTP是一个简单的请求－响应协议，它通常运行在TCP之上。HTTP提供的进程间通信并不仅限于Web。
+
+- HTTP 1.1相比于HTTP 1.0最大的区别在于它支持持续连接。1.0是一个请求一个响应之后TCP连接就断掉了。在一个连接的开始阶段，TCP使用慢启动过程来增加吞吐量，直到它了解网络路径的行为。这个预热期的后果是多个短TCP连接比一个长TCP连接传输信息所需时间要长很多。
+
+- HTTP方法
+```
+  GET     读取一个页面  通用形式 GET filename HTTP/1.1
+  HEAD    读取页面的头
+  POST    附加一个Web页面
+  PUT     存储一个Web页面
+  DELETE  删除一个Web页面
+  TRACE   指示服务器发回收到的请求，用于调试
+  CONNECT 通过代理连接
+  OPTIONS 向服务器查询一个页面并且获得可用于该页面的方法和头
+```
+
+- HTTP响应，每个响应消息由一个状态行以及可能的附加信息(如Web页面)，状态行有
+```
+  1xx   消息        100=服务器同意请求   不常用
+  2xx   成功       200=请求成功  204=没有内容
+  3xx   重定向     301＝移动页面 304=缓存的页面仍然有效
+  4xx   客户错误    403=页面禁止  404=页面没找到
+  5xx   服务器错误  500=服务器内部错误  503=稍后再试
+```
+
+- 消息头：请求行(如GET)后面可能还有额外的行，包含更多信息。同样，响应消息也有响应头。
+```
+  User-Agent      请求      有关浏览器及平台信息
+  Accept          请求      用户可以接受的MIME类型
+  Accept-Charset  请求      用户可以接受的字符集
+  Accept-Encoding 请求      用户可接受的页面编码(如gzip)
+  Accept-Language 请求      用户可处理的自然语言
+  If-Modified-Since请求     检查本地缓存是否有效
+  If-None-Match   请求      用于缓存
+  Host            请求      服务器的DNS名字，这是强制的
+  Authorization   请求      检查用户权限
+  Referer         请求      发出请求的先前URL，对于跟踪Web浏览很有用
+  Cookie          请求      与后面的Set-Cookie配套使用，返回浏览器传来的Cookie
+  Set-Cookie      响应      客户需要存储的Cookie
+  Server          响应      关于服务器的信息
+  Content-Encoding响应      内容编码(如gzip)
+  Content-Language响应      页面使用的自然语言
+  Content-Length  响应      页面以字节计的长度
+  Content-Type    响应      页面的MIME类型
+  Content-Range   响应      页面的一部分
+  Last-Modified   响应      页面最后修改的时间
+  Expires         响应      页面不再有效的时间
+  Location        响应      通知客户应该尝试另外一个URL
+  Accept-Ranges   响应      指出服务器能接受的请求的字节范围
+  Date            两者      发送消息的日期与时间
+  Cache-Control   两者      指示如何处理缓存
+  ETag            两者      页面内容的标签，主要用于缓存
+  Upgrade         两者      发送方希望切换的协议
+```
+
+- 缓存，缓存是为了打开重复页面时不必再进行重复传输。检查缓存是否是最新的有多种策略。
+
+- Telnet命令可以用来建立TCP连接
+```
+  telnet www.baidu.com  80
+  GET / HTTP/1.1
+  Host: www.baidu.com
+  
+  得到HTML响应
+```
+
+### 移动Web
+
+- 在移动设备上使用Web会有屏幕小，通信昂贵等问题
+
+- 通过User-Agent头来给移动用户返回内容较少的页面
+
+- 此外，还有转码的方法，转码工作是介于服务器和移动电话之间完成的
