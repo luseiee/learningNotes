@@ -1474,3 +1474,35 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 - 通过User-Agent头来给移动用户返回内容较少的页面
 
 - 此外，还有转码的方法，转码工作是介于服务器和移动电话之间完成的
+
+## 流式音视频
+
+### 数字音频
+
+- 在每秒44100个采样并且每个样值16位的情况下，无压缩的CD质量单声道需要705.6kbps。
+
+- MP3和AAC是两种流行的音频压缩算法。
+
+### 数字视频
+
+- JPEG, Joint Photographic Experts Group, 联合图像专家组
+
+- MPEG, Motion Picture Experts Group, 运动图像专家组
+
+- I帧，P帧，B帧
+
+### 流式存储媒体
+
+- Web页面实时播放视频是这样的一个过程。浏览器通过HTTP请求元文件(可能是这样一段文本: rtsp://joes-movie-server/movie-0025.mp4)，然后媒体播放器(插件或者辅助应用)通过RTSP进行实时播放。
+
+- RTSP (Real Time Streaming Protocol)，实时流协议，基于UDP或TCP
+
+### 流式直播媒体
+
+- 实际上的Internet不是通过UDP传输给用户的，而是与每个用户建立一个单独的TCP连接。原因是，IP组播在Internet上没有真正部署，想想也是，怎么可能向全世界主机组播呢？ISP和网络仅在自己内部支持它。所以还是要先建立TCP连接。
+
+### 实时会议
+
+- H.323是Internet实时音频视频呼叫的标准，它将电话网络和Ineternet连接了。类似Skype等等。
+
+- SIP-会话发起协议，是为了设计一种更加简单和模块化的方法来实现IP语音。
