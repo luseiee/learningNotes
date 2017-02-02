@@ -1696,6 +1696,6 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 
 - 公开秘钥算法：有公钥和私钥，公钥加密私钥解密。
 
-- 需要满足，公钥无法推测
+- 需要满足，公钥无法推测出私钥，需要抵御选择明文攻击。
 
 
