@@ -1765,3 +1765,4 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 - 方法是这样的，首先有若干个根CA，根CA可以给二级CA发证书，二级CA发证书给三级CA等等，最后一级CA发证书给个人。这样通过层层向上，用户就可以通过一级级证书获得根CA的公钥。然后根CA的公钥一般直接存在浏览器中。稳得一笔。
 
 - 这个体系叫PKI(Public Key Infrastructure)，公钥基础设施。
+
