@@ -1854,5 +1854,36 @@ The round-trip delay is about 540 msec, so with a 50-Mbps channel the bandwidth-
 
 - Trudy修改Alice的ISP上的DNS缓存，用她自己的IP地址替换Bob的IP地址，这样中间人攻击就方便了许多。
 
+- Trudy如何修改Alice的ISP上的DNS缓存呢？她向Alice的ISP询问bob.com的IP地址，然后抢在bob的DNS
+服务器相应之前抢先回答，bob.com的IP是42.9.9.9(假的)。
 
+- 问题一，响应的IP地址不对。很简单，Trudy自己把响应IP改成顶级域名服务器的IP即可。
+
+- 问题二，每个UDP请求都有序号，怎么去获得这个序号？Trudy弄一个自己的DNS服务器，然后去询问Alice的ISP：trudy.com的IP是多少？然后就获得了这个请求的序号，之后在这个序号上偏移一些都尝试一下就可能碰巧猜中之前bob.com的询问ID。
+
+#### 安全的DNS
+
+- 为了解决DNS欺骗问题，有DNSsec这样一个技术。
+
+- DNSsec提供了三个服务：证明数据是从哪里发出来的，公钥的发放，事物和请求的认证。
+
+- 但是大量的DNS服务器并没有部署DNSsec，所以仍然会遭受DNS欺骗。
+
+### SSL (Secure Sockets Layer) 安全套接层
+
+- SSL/TLS是为网络通信提供安全及数据完整性的一种安全协议。这两个是差不多的，互不兼容，一般浏览器都支持。
+
+- SSL层位于HTTP层和TCP层之间，它接受来自浏览器的请求，再将请求传递给TCP以便传输到服务器上。
+
+- 在SSL之上的HTTP被称为HTTPS(Secrue HTTP)
+
+- SSL首先建立安全的连接，这和之前学习的紧密相关。Alice作出请求，Bob会发来证书或者证书链，浏览器通过预装的公钥验证Bob的证书。之后再进行几次握手建立安全的连接并且协商好了加密的秘钥。
+
+- 传输过程中使用SSL的第二个子协议，这个过程加入了加密和完整性检查。
+
+### 移动代码安全性
+
+- 主要的三种下载到浏览器的代码是Java Applet，Active X，JavaScript
+
+- 确保安全有两种途径。第一种，监控代码，不让它修改系统重要资源。第二种，确认签名，确认代码来自一个可信的源。
 
