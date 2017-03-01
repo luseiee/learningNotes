@@ -133,3 +133,92 @@ Author        : Lu, Phil
 
 - 抽象类中有抽象方法，继承的时候一定要覆盖这些抽象方法，抽象类与接口不同的是它也有具体方法以及具体变量。
 
+## 对象引用
+
+```java
+  Human aPerson = new Human(160);
+```
+- 首先看等号的右侧。new是在内存中为对象开辟空间。具体来说，new是在内存的堆(heap)上为对象开辟空间。这一空间中，保存有对象的数据和方法。
+
+- 再看等号的左侧。aPerson指代一个Human对象，被称为对象引用(reference)。实际上，aPerson并不是对象本身，而是类似于一个指向对象的指针。aPerson存在于内存的栈(stack)中。
+
+- 当我们用等号赋值时，是将右侧new在堆中创建对象的地址赋予给对象引用。
+
+- 这里的内存，指的是JVM (Java Virtual Machine)虚拟出来的Java进程内存空间。
+
+- new关键字的完整含义是，在堆上创建对象。栈比较快。
+
+- 基本类型(primitive type)的对象，比如int, double，保存在栈上。
+
+- 一个对象可以有多个引用 (一个人可以放多个风筝)。当程序通过某个引用修改对象时，通过其他引用也可以看到该修改。
+
+## 垃圾回收
+
+- 随着方法调用的结束，引用和基本类型变量会被清空。由于对象存活于堆，所以对象所占据的内存不会随着方法调用的结束而清空。进程空间可能很快被不断创建的对象占满。
+
+- Java内建有垃圾回收(garbage collection)机制，用于清空不再使用的对象，以回收内存空间。
+
+- 当没有任何引用指向某个对象时，该对象被清空。
+
+## 参数传递
+
+- 基本类型变量的值传递，意味着变量本身被复制，并传递给Java方法。Java方法对变量的修改不会影响到原变量。
+
+- 引用的值传递，意味着对象的地址被复制，并传递给Java方法。Java方法根据该引用的访问将会影响对象。
+
+- 就是new出来的是引用传递，普通的是值传递，普通的是存在栈中的。
+
+## 类型转换与多态
+
+- Java是一种强类型(strongly typing)语言，它会对类型进行检查。比如奖Cup类的对象赋给Human类的引用就会报错。
+
+- 为什么python也是强类型？
+
+```python
+  >>> 3+6
+  9
+  >>> "3"+6
+  error
+```
+
+- python看起来是弱类型因为它的引用不用指定类型！！
+
+### 基本类型变换
+
+- 注意，只是基本类型！！！
+
+```java
+  int a;
+  a = (int) 1.23;  // narrowing conversion
+  int a = 3;
+  double b;
+  b = a; // widening conversion
+```
+
+- widening可以不加变量类型的
+
+### upcast与多态
+
+```java
+  public class Test
+  {
+      public static void main(String[] args)
+      { 
+          Cup aCup;
+          BrokenCup aBrokenCup = new BrokenCup();
+          aCup = aBrokenCup; // upcast
+          aCup.addWater(10); // method binding
+      }
+  }
+```
+- 我们随后调用了aCup(我们声明它为Cup类型)的addWater()方法。尽管aCup是Cup类型的引用，它实际上调用的是BrokenCup的addWater()方法！也就是说，即使我们经过upcast，将引用的类型宽松为其基类，Java依然能正确的识别对象本身的类型，并调用正确的方法。Java可以根据当前状况，识别对象的真实类型，这叫做多态(polymorphism)。多态是面向对象的一个重要方面。
+
+- Java告诉我们，一个衍生类对象可以当做一个基类对象使用，而Java会正确的处理这种情况。
+
+### downcast
+
+- 我们可以将一个基类引用向下转型(downcast)成为衍生类的引用，但要求该基类引用所指向的对象，已经是所要downcast的衍生类对象。比如可以将上面的hisCup向上转型为Cup类引用后，再向下转型成为BrokenCup类引用。
+
+### object类
+
+- Java中，所有的类实际上都有一个共同的继承祖先，即Object类。
