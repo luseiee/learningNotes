@@ -1,0 +1,135 @@
+Title         : JAVA
+Author        : Lu, Phil
+
+[TITLE]
+
+# Java基础
+
+## 封装与接口
+
+- 在一个.java文件中，有且只能有一个类带有public关键字。不带关键字的也是可见的，后面会说到。
+
+## Interface接口
+
+```Java
+  interface Cup {
+      void addWater(int w);
+      void drinkWater(int w);
+  }
+  
+  class MusicCup implements Cup 
+  {
+      public void addWater(int w) 
+      {
+          this.water = this.water + w;
+      }
+  
+      public void drinkWater(int w)
+      {
+          this.water = this.water - w;
+      }
+  
+      private int water = 0;
+  }
+```
+
+- 更易于管理
+- 一个类可以使用多个interface
+
+## 包
+
+- 在.java文件的第一行写上`package com.vamei.society`
+
+- 一个Java文件中只能有一个public的类,这个类要和文件同名！
+
+- 一个Java类的完整路径由它的包和类名共同构成，比如com.vamei.society.Human。相应的Human.java程序要放在com/vamei/society/下。
+
+- 一个类可以没有public关键字，它实际上也表示一种权限: 该类在它所在的包中可见。
+
+### 包的调用
+
+- 我们只需要将Human.java编译的Human.class放入相应的文件夹就可以了。比如，我将Human.class放入com/vamei/society/中。实际上，你也可以把.java文件放入相应路径，Java会在使用时自动编译。
+
+- 如果整个包(也就是com文件夹)位于当前的工作路径中，那么不需要特别的设置，就可以使用包了。
+
+- 可以这样import
+```
+  import com.vamei.society.*;
+```
+
+- 也可以直接提供完整路径使用，则不需要import
+
+- 如果包没有放在当前工作路径下，我们在使用包时，需要通知Java。设置系统的CLASSPATH环境变量。
+
+## 继承
+
+```Java
+  class Woman extends Human
+  {
+      /**
+      * new method
+      */
+      public Human giveBirth()
+      {
+          System.out.println("Give birth");
+          return (new Human(20));
+      }
+  }
+```
+
+- 基类和衍生类
+
+- 衍生类不能访问基类的私有对象，public的是一样的都可以访问，衍生类可以访问自己的private，外部不能访问衍生类的private。
+
+- protected表示自己不能被外部访问，但是可以被衍生类访问。
+
+- super和this类似，但是super指父类，比如父类有个getHeight()方法，那么在子类定义新的getHeight()时可以在内部先执行super.getHeight()。当子类和父类有同样方法时(参数都一样)，那么对外呈现子类的，内部可以用super或者this区分。
+
+- 调用父类的构造方法直接输入super即可。
+```java
+  class Woman extends Human
+  {
+      /**
+      * constructor
+      */
+      public Woman(int h)
+      {
+          super(h); // base class constructor
+          System.out.println("Hello, Pandora!");
+      }
+  }
+```
+
+## static 类数据与类方法
+
+- 带static的成员变量是类成员变量，被所有对象共享
+
+- 如果一个方法声明为static，那么它只能调用static的数据和方法，而不能调用非static的数据和方法。
+
+- 调用类方法时，我们可以通过class.method()的方式调用，也可以通过object.method()的方式调用。
+
+- 如果变量前加final，那么这个变量一旦赋值不能更改(当然如果这时类的实例，这个实例可以照常操作)
+
+## 接口的继承与抽象类
+
+- 接口可以继承接口，而且可以多重继承，但是类不行。
+```java
+  interface MusicCup extends Cup, Player 
+  {
+      void display();
+  }
+```
+
+- 抽象类
+```java
+  abstract class Food {
+      public abstract void eat();
+      public void happyFood()
+      {
+          System.out.println("Good! Eat Me!");
+      }
+  }
+```
+
+- 抽象类中有抽象方法，继承的时候一定要覆盖这些抽象方法，抽象类与接口不同的是它也有具体方法以及具体变量。
+
