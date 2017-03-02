@@ -288,4 +288,67 @@ Author        : Lu, Phil
 
 - 我们可以自定义异常类，只要继承现有异常类就可以了。
 
+## IO基础
+
+- 基本操作,读文件，文件要在project目录下
+```java
+    public static void main(String[] args) {
+        try {
+            BufferedReader br =
+                    new BufferedReader(new FileReader("file.txt"));
+
+            String line = br.readLine();
+
+            while (line != null) {
+                System.out.println(line);
+                line = br.readLine();
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("IO Problem");
+        }
+    }
+```
+
+- BufferedReader()是一个装饰器(decorator)，它接收一个原始的对象，并返回一个经过装饰的、功能更复杂的对象。
+
+- 基本操作，写文件
+```java
+   try {
+            String content = "Thank you for your fish.";
+
+            File file = new File("new.txt");
+
+            // create the file if doesn't exists
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+
+        }
+        catch(IOException e) {
+            System.out.println("IO Problem");
+        }
+    }
+```
+
+## 内存管理与垃圾回收
+
+- 在Java中，JVM中的栈记录了线程的方法调用。每个线程拥有一个栈。在某个线程的运行过程中，如果有新的方法调用，那么该线程对应的栈就会增加一个存储单元，即帧(frame)。在frame中，保存有该方法调用的参数、局部变量和返回地址。
+
+- Java的参数和局部变量只能是基本类型的变量(比如int)，或者对象的引用(reference)。因此，在栈中，只保存有基本类型的变量和对象引用。引用所指向的对象保存在堆中。(引用可能为Null值，即不指向任何对象)
+
+- 当被调用方法运行结束时，该方法对应的帧将被删除，参数和局部变量所占据的空间也随之释放。线程回到原方法，继续执行。当所有的栈都清空时，程序也随之运行结束。
+
+### 循环引用
+
+- 我们以栈和static数据为根(root)，从根出发，跟随所有的引用，就可以找到所有的可到达对象。也就是说，一个可到达对象，一定被根引用，或者被其他可到达对象引用。
+
+![28231405-e87f006cb98141f994aa68186cd49de1]
+
+[28231405-e87f006cb98141f994aa68186cd49de1]: images/28231405-e87f006cb98141f994aa68186cd49de1.png "28231405-e87f006cb98141f994aa68186cd49de1" { width:auto; max-width:90% }
 
