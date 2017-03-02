@@ -222,3 +222,70 @@ Author        : Lu, Phil
 ### object类
 
 - Java中，所有的类实际上都有一个共同的继承祖先，即Object类。
+
+# JAVA进阶
+
+## String
+
+- String也是引用传递，不过它不需要new
+
+- String是不可变对象，即使用replace也只是返回一个新的String
+
+- 常用String的方法
+```java
+  s.length()                        返回s字符串长度
+  s.charAt(2)                       返回s字符串中下标为2的字符 
+  s.substring(0, 4)                 返回s字符串中下标0到4的子字符串
+  s.indexOf("Hello")                返回子字符串"Hello"的下标
+  s.startsWith(" ")                 判断s是否以空格开始
+  s.endsWith("oo")                  判断s是否以"oo"结束
+  s.equals("Good World!")           判断s是否等于"Good World!"
+                                    ==只能判断字符串是否保存在同一位置。需要使用equals()判断字符串的内容是否相同。 
+  s.compareTo("Hello Nerd!")        比较s字符串与"Hello Nerd!"在词典中的顺序，
+                                    返回一个整数，如果<0，说明s在"Hello Nerd!"之前； 
+                                                如果>0，说明s在"Hello Nerd!"之后；
+                                                如果==0，说明s与"Hello Nerd!"相等。
+  s.trim()                          去掉s前后的空格字符串，并返回新的字符串
+  s.toUpperCase()                   将s转换为大写字母，并返回新的字符串
+  s.toLowerCase()                   将s转换为小写，并返回新的字符串
+  s.replace("World", "Universe")    将"World"替换为"Universe"，并返回新的字符串
+```
+
+## 异常处理
+```java
+  try {
+    ...;
+  }
+  catch(IOException e) {
+      e.printStackTrace();
+      System.out.println("IO problem");
+  }
+  catch() {
+    ...;
+  }
+  finally {
+    ...;
+  }
+```
+- 下图中红色的是unchecked错误，应该由程序员编程解决。蓝色的是由于和编程环境互动产生的错误，应该做异常处理。
+
+![09015838-44b97618e1c84db6be54d72c77ababb9]
+
+[09015838-44b97618e1c84db6be54d72c77ababb9]: images/09015838-44b97618e1c84db6be54d72c77ababb9.png "09015838-44b97618e1c84db6be54d72c77ababb9" { width:auto; max-width:90% }
+
+- 抛出异常
+```java
+    private void test(double p) throws Exception // 包含throws关键词不一定会throw错误，只是做检查
+    {
+        if (p < 0) {
+            Exception e = new Exception("p must be positive");
+            throw e;
+        }
+    }
+```
+
+- 我们在useBattery()中有异常处理器。由于test()方法不直接处理它产生的异常，而是将该异常抛给上层的useBattery()，所以在test()的定义中，我们需要throws Exception来说明。
+
+- 我们可以自定义异常类，只要继承现有异常类就可以了。
+
+
