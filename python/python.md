@@ -6,7 +6,8 @@ Package       : xeCJK
 
 ** http://www.liaoxuefeng.com/ **
 
-# Day One: Basics
+# Python基础
+
 ## 输入输出
 ```python
   name = input('please enter your name: ')
@@ -134,3 +135,65 @@ Package       : xeCJK
 - *args是可变参数，args接收的是一个tuple；
 
 - **kw是关键字参数，kw接收的是一个dict。
+
+# 面向对象高级编程
+
+## 给类和实例绑定方法
+
+```python
+  s = Student()  
+  s.name = 'Michael' # 给实例绑定属性
+  def set_age(self, age): # 定义一个函数作为实例方法
+    self.age = age
+  from types import MethodType
+  s.set_age = MethodType(set_age, s) # 给实例绑定一个方法
+  def set_score(self, score):
+    self.score = score
+  Student.set_score = set_score # 给对象绑定方法
+```
+
+## 使用__slots__
+
+```python
+  class Student(object):
+      __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
+```
+
+## 使用@property
+
+```python
+    class Student(object):
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+    >>> s = Student()
+    >>> s.score = 60 # OK，实际转化为s.set_score(60)
+    >>> s.score # OK，实际转化为s.get_score()
+    60
+    >>> s.score = 9999
+    error
+```
+
+## python允许多重继承
+
+## 定制类
+
+```python
+    def __str__(self):
+        return 'Student object (name: %s)' % self.name
+    __repr__ = __str__ # 这是在直接输入s的时候输出的东西
+>>> print(Student('Michael'))
+Student object (name: Michael)
+
+
+```
+
