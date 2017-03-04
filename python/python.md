@@ -3,8 +3,6 @@ Author        : Lu, Phil
 
 [TITLE]
 
-** http://www.liaoxuefeng.com/ **
-
 # Python基础
 
 ## 输入输出
@@ -340,7 +338,6 @@ if __name__=='__main__':
     p.close()
     p.join()
     print('All subprocesses done.')
-```
 
 - 如果子进程不是自身，而是一个外部进程，则需要`import subprocess`
 
@@ -379,6 +376,54 @@ if __name__=='__main__':
 - 就是将测试直接写在类的定义中，又可以当示例，又可以直接运行测试。
 
 - doctest非常有用，不但可以用来测试，还可以直接作为示例代码。通过某些文档生成工具，就可以自动把包含doctest的注释提取出来。用户看文档的时候，同时也看到了doctest。
+
+# 科学计算
+
+## numpy
+
+```python
+# 多维数组切片
+a = np.array([[11, 12, 13, 14, 15],
+              [16, 17, 18, 19, 20],
+              [21, 22, 23, 24, 25],
+              [26, 27, 28 ,29, 30],
+              [31, 32, 33, 34, 35]])
+              
+print(a[0, 1:4]) # >>>[12 13 14]
+print(a[1:4, 0]) # >>>[16 21 26]
+print(a[::2,::2]) # >>>[[11 13 15]
+                  #     [21 23 25]
+                  #     [31 33 35]]
+print(a[:, 1]) # >>>[12 17 22 27 32]
+# 数组属性
+print(type(a)) # >>><class 'numpy.ndarray'>
+print(a.dtype) # >>>int64
+print(a.size) # >>>25
+print(a.shape) # >>>(5, 5)
+print(a.itemsize) # >>>8
+print(a.ndim) # >>>2
+print(a.nbytes) # >>>200
+```
+
+## scipy
+
+- SciPy是一款方便、易于使用、专为科学和工程设计的Python工具包.它包括统计,优化,整合,线性代数模块,傅里叶变换,信号和图像处理,常微分方程求解器等等
+
+```python
+from scipy.optimize import leastsq
+plsq = leastsq(residuals, p0, args=(y1, x))
+```
+
+## theano快速入门
+
+```python
+import theano  
+x=theano.tensor.iscalar('x')#声明一个int类型的变量x  
+y=theano.tensor.pow(x,3)#定义y=x^3  
+f=theano.function([x],y)#定义函数的自变量为x（输入），因变量为y（输出）  
+print f(2)#计算当x=2的时候，函数f(x)的值  
+print f(4)#计算当x=4时，函数f(x)=x^3的值  
+```
 
 
 
