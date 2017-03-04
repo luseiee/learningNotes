@@ -343,6 +343,18 @@ if __name__=='__main__':
     print('All subprocesses done.')
 ```
 
+- 如果子进程不是自身，而是一个外部进程，则需要`import subprocess`
+
+- 进程间通信
+
+- Process之间肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。Python的multiprocessing模块包装了底层的机制，提供了Queue、Pipes等多种方式来交换数据。
+
+我们以Queue为例，在父进程中创建两个子进程，一个往Queue里写数据，一个从Queue里读数据：
+
+
+
+
+
 - Python虽然不能利用多线程实现多核任务，但可以通过多进程实现多核任务。多个Python进程有各自独立的GIL锁，互不影响。
 
 
