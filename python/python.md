@@ -416,14 +416,198 @@ plsq = leastsq(residuals, p0, args=(y1, x))
 
 ## theano快速入门
 
-```python
-import theano  
-x=theano.tensor.iscalar('x')#声明一个int类型的变量x  
-y=theano.tensor.pow(x,3)#定义y=x^3  
-f=theano.function([x],y)#定义函数的自变量为x（输入），因变量为y（输出）  
-print f(2)#计算当x=2的时候，函数f(x)的值  
-print f(4)#计算当x=4时，函数f(x)=x^3的值  
+### 常用的数据类型
+```
+数值：iscalar(int类型的变量)、fscalar(float类型的变量)
+一维向量：ivector(int 类型的向量)、fvector(float类型的向量)、
+二维矩阵：fmatrix(float类型矩阵)、imatrix（int类型的矩阵）
+三维float类型矩阵：ftensor3  
+四维float类型矩阵：ftensor4
 ```
 
+### 定义函数，求偏导数
 
+```python
+# -*- coding: utf-8 -*-
+import theano
+import numpy as np
+x = theano.tensor.fscalar('x')#声明一个int类型的变量x  
+y = theano.tensor.pow(x,3)#定义y=x^3  
+f = theano.function([x],y)#定义函数的自变量为x（输入），因变量为y（输出）  
+print f(2)#计算当x=2的时候，函数f(x)的值
+dx = theano.grad(y,x) # 偏导数函数
+f2 = theano.function([x],dx) # 定义函数f，输入为x，输出为s函数的偏导数  
+```
+
+### 共享变量
+
+- 在程序中，我们一般把神经网络的参数W、b等定义为共享变量，因为网络的参数，基本上是每个线程都需要访问的。
+
+```python
+  import theano  
+  import numpy  
+  A=numpy.random.randn(3,4);#随机生成一个矩阵  
+  x = theano.shared(A)#从A，创建共享变量x  
+  print x.get_value() #通过get_value()、set_value()可以查看、设置共享变量的数值。
+  
+  #coding=utf-8  
+  import theano  
+  w= theano.shared(1)#定义一个共享变量w，其初始值为1  
+  x=theano.tensor.iscalar('x')  
+  f=theano.function([x], w, updates=[[w, w+x]]) #定义函数自变量为x，因变量为w，当函数执行完毕后，更新参数w=w+x  
+  print f(3)#函数输出为w  
+  print w.get_value()#这个时候可以看到w=w+x为4 
+```
+
+# 分类算法
+
+## 决策树
+
+- [决策树](http://www.cnblogs.com/leoo2sk/archive/2010/09/19/decision-tree.html)
+
+![1_3]
+
+[1_3]: images/1_3.png "1_3" { width:auto; max-width:90% }
+
+- 决策树（decision tree）是一个树结构（可以是二叉树或非二叉树）。其每个非叶节点表示一个特征属性上的测试，每个分支代表这个特征属性在某个值域上的输出，而每个叶节点存放一个类别。使用决策树进行决策的过程就是从根节点开始，测试待分类项中相应的特征属性，并按照其值选择输出分支，直到到达叶子节点，将叶子节点存放的类别作为决策结果。
+
+- 当构建决策树的时候，上层节点要有最大的信息增益，如果叶子结点不纯净，则选出现次数多的那个
+
+## 随机森林
+
+- [随机森林](http://blog.csdn.net/holybin/article/details/25653597)
+
+- 随机森林由许多的决策树组成，因为这些决策树的形成采用了随机的方法，所以叫做随机森林。
+
+- 当测试数据进入随机森林时，其实就是让每一颗决策树进行分类看看这个样本应该属于哪一类，最后取所有决策树中分类结果最多的那类为最终的结果（每棵树的权重要考虑进来）。所有的树训练都是使用同样的参数，但是训练集是不同的，分类器的错误估计采用的是oob（out of bag）的办法。
+
+- 随机森林可以既可以处理属性为离散值的量，如ID3算法，也可以处理属性为连续值的量，比如C4.5算法。
+
+## kNN
+
+- k-近邻(kNN，k-Nearest Neighbors)算法是一种基于实例的分类方法。该方法就是找出与未知样本x距离最近的k个训练样本，看这k个样本中多数属于哪一类，就把x归为那一类。k-近邻方法是一种懒惰学习方法，它存放样本，直到需要分类时才进行分类，如果样本集比较复杂，可能会导致很大的计算开销，因此无法应用到实时性很强的场合
+
+## 朴素贝叶斯
+
+- 就好比这么个道理，你在街上看到一个黑人，我问你你猜这哥们哪里来的，你十有八九猜非洲。为什么呢？因为黑人中非洲人的比率最高，当然人家也可能是美洲人或亚洲人，但在没有其它可用信息下，我们会选择条件概率最大的类别，这就是朴素贝叶斯的思想基础。
+
+-       第一阶段——准备工作阶段，这个阶段的任务是为朴素贝叶斯分类做必要的准备，主要工作是根据具体情况确定特征属性，并对每个特征属性进行适当划分，然后由人工对一部分待分类项进行分类，形成训练样本集合。这一阶段的输入是所有待分类数据，输出是特征属性和训练样本。这一阶段是整个朴素贝叶斯分类中唯一需要人工完成的阶段，其质量对整个过程将有重要影响，分类器的质量很大程度上由特征属性、特征属性划分及训练样本质量决定。
+
+- 第二阶段——分类器训练阶段，这个阶段的任务就是生成分类器，主要工作是计算每个类别在训练样本中的出现频率及每个特征属性划分对每个类别的条件概率估计，并将结果记录。其输入是特征属性和训练样本，输出是分类器。这一阶段是机械性阶段，根据前面讨论的公式可以由程序自动计算完成。
+
+- 第三阶段——应用阶段。这个阶段的任务是使用分类器对待分类项进行分类，其输入是分类器和待分类项，输出是待分类项与类别的映射关系。这一阶段也是机械性阶段，由程序完成。
+
+## linear regression
+
+- 最优解，突优化
+- 做拟合，x对y
+- 找到那条线
+
+## k-means
+
+- unsupervised learning
+- EM:k-means是特例
+- EML
+
+## 高斯混合模型
+
+- 一堆数据，两个高斯组成了现在的数据。然后去分离出来这两个峰
+
+## Bias Varience Tradeoff
+
+- 模型简单，varaince低，不容易overfit，bias
+- 复杂模型，bias低，variance高
+
+## SVM
+
+- 分类，与逻辑回归区别是，它即使分类对了，还要使得分类的margin最平均。
+
+- 点到超平面的距离分布要好
+
+## Kernel SVM
+- 线性不可分
+- 大量数据也没啥用
+
+## boosting
+
+- 弱分类器合成强分类器，每个可以做到80%，可以合起来分90%
+- training data，弱分类器
+
+## 神经网络
+
+## 总结
+
+- 如果是小训练集，高偏差/低方差的分类器（例如，朴素贝叶斯NB）要比低偏差/高方差大分类的优势大（例如，KNN），因为后者会发生过拟合（overfiting）
+
+- 复杂模型需要大量训练数据，不然容易过拟合。在一些特征明确，或者概率明确的时候，可以使用简单的模型，如朴素贝叶斯，逻辑回归。kNN在样本数据数量不一样的情况下效果不好。
+
+- 决策树容易发生过拟合
+
+- 线性回归不能解决非线性问题，SVM也不行，但是kernelSVM则可以。
+
+- 朴素贝叶斯需要决定一些先验概率（这些先验概率往往是不知道的）
+
+# 深度学习内容
+
+## 主动学习
+
+- 在某些情况下，没有类标签的数据相当丰富而有类标签的数据相当稀少，并且人工对数据进行标记的成本又相当高昂。在这种情况下，我们可以让学习算法主动地提出要对哪些数据进行标注，之后我们要将这些数据送到砖家那里让他们进行标注，再将这些数据加入到训练样本集中对算法进行训练。这一过程叫做主动学习。
+
+## 半监督学习
+
+- 部分有标签，用无标签数据加强有标签学习
+
+## 增强学习
+
+- 类似alphago
+
+## loss function的选择
+
+- 当我们用sigmoid函数作为神经元的激活函数时，最好使用交叉熵代价函数来替代方差代价函数，以避免训练过程太慢。因为sigmoid会产生一个求导后代入激活值的项，这一项会比较小。然后交叉熵代价函数就不会有这个缺点。
+
+- 收敛速度与激活函数，代价函数都有很大的关系。
+
+- 通过添加一个权重衰减项来修改代价函数，使得代价函数是凸函数
+
+## validation data
+
+- Validation set: a set of examples used to tune the parameters of a classifier In the MLP case, we would use the validation set to find the “optimal” number of hidden units or determine a stopping point for the back-propagation algorithm
+
+## SGD算法的比较
+
+### GD是最naive的
+
+### SGD
+
+### Momentum
+
+就是当前下降的方向要与之前下降的方向加权平均。这里的\gamma一般取0.9就行了。直观上可以减少震荡，能更快的收敛
+
+![quicklatex.com-b0cd988df959c1d76670dccf1a8a2a35_l3]
+
+[quicklatex.com-b0cd988df959c1d76670dccf1a8a2a35_l3]: images/quicklatex.com-b0cd988df959c1d76670dccf1a8a2a35_l3.svg "quicklatex.com-b0cd988df959c1d76670dccf1a8a2a35_l3" { width:auto; max-width:90% }
+
+### NAG
+
+NAG(Nesterov accelerated gradient)核心思想就是利用Momentum预测下一步的梯度，而不是使用当前的\Vtheta。
+
+### Adagrad
+
+通过算法让学习速率的选择更加容易
+
+其学习率是单调递减的，训练后期学习率非常小
+
+其需要手工设置一个全局的初始学习率
+
+### rmsprop，adadelta
+
+是基于adagrad的，两者差不多
+
+### Adam
+
+神器，首先Adam利用了AdaGrad和RMSProp在稀疏数据上的优点。对初始化的偏差的修正也让Adam表现的更好。
+
+### 总结
+
+虽然针对不同的任务，应该尝试不同的优化算法。我觉得实在不知道用什么就试试Adam。但是在训练过程中自己调整一下学习速率对于复杂优化目标是必要的（个人观点），比如一个epoch乘以0.5啥的。这就得靠经验了。别以为最普通的SGD不行，还是会被很多人使用，因为谁都不知道训练复杂模型的过程中会发生什么，而SGD是最能保证收敛的
 
